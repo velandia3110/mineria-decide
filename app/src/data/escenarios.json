@@ -1,0 +1,141 @@
+[
+  {
+    "id": "gas-galeria",
+    "titulo": "Gases después de la voladura",
+    "categoriaId": "ventilacion",
+    "descripcion": "Debes entrar a una galería después de una voladura. El ventilador falló. ¿Qué haces?",
+    "inicio": "n1",
+    "nodos": {
+      "n1": {
+        "situacion": "Terminó la voladura en la galería 3. Te piden entrar a revisar el frente. Notas que el ventilador auxiliar está apagado y todavía hay algo de humo.",
+        "opciones": [
+          {
+            "texto": "Pido encender el ventilador, espero y mido el aire con el detector multigás antes de entrar",
+            "correcta": true,
+            "feedback": "Correcto. Después de una voladura quedan gases tóxicos como el monóxido de carbono (CO). Sin ventilación no se van. Siempre se ventila y se mide antes de entrar.",
+            "siguiente": "n2"
+          },
+          {
+            "texto": "Entro rápido, el humo ya está bajando",
+            "correcta": false,
+            "feedback": "Incorrecto. Que el humo baje no significa que el aire sea seguro. El CO no tiene olor ni color. Sin ventilación y sin medir, entras a ciegas.",
+            "siguiente": "n2b"
+          },
+          {
+            "texto": "Me tapo la boca con un trapo mojado y entro",
+            "correcta": false,
+            "feedback": "Incorrecto. Un trapo mojado no filtra el CO ni te da oxígeno. Solo da una falsa sensación de protección.",
+            "siguiente": "n2c"
+          }
+        ]
+      },
+      "n2": {
+        "situacion": "El ventilador ya funciona. En la entrada de la galería, el detector multigás suena: marca CO alto y oxígeno bajo.",
+        "opciones": [
+          {
+            "texto": "No entro. Aviso al supervisor y espero a que la ventilación limpie el aire",
+            "correcta": true,
+            "feedback": "Correcto. Si el detector da alarma, el aire no es apto. Se espera más ventilación y se vuelve a medir. Avisar permite que nadie más entre.",
+            "siguiente": "n3"
+          },
+          {
+            "texto": "Seguro el detector está fallando, entro igual",
+            "correcta": false,
+            "feedback": "Incorrecto. Nunca ignores una alarma del detector. Si dudas del equipo, se verifica con otro detector, pero no se entra mientras tanto.",
+            "siguiente": "n2b"
+          }
+        ]
+      },
+      "n3": {
+        "situacion": "Una nueva medición sale bien y entras con tu compañero. Más adelante encuentras a un trabajador de otro turno caído en el piso. Tu detector vuelve a sonar.",
+        "opciones": [
+          {
+            "texto": "Retrocedo a aire fresco con mi compañero, aviso por radio y pido rescate con equipo de respiración",
+            "correcta": true,
+            "feedback": "Correcto. Si alguien cayó y el detector suena, el aire allí es peligroso. Rescatar sin equipo puede dejar dos o tres víctimas. Avisar rápido es la mejor ayuda.",
+            "siguiente": "finExito"
+          },
+          {
+            "texto": "Corro a cargarlo y sacarlo yo mismo",
+            "correcta": false,
+            "feedback": "Incorrecto. Es un impulso natural, pero el mismo gas que lo afectó a él te afectará a ti en minutos. Muchas víctimas en minería son rescatistas sin protección.",
+            "siguiente": "finDobleVictima"
+          },
+          {
+            "texto": "Apago la alarma y me acerco a revisarlo",
+            "correcta": false,
+            "feedback": "Incorrecto. Apagar la alarma no cambia el aire. Te acercas a la zona más contaminada sin ninguna protección.",
+            "siguiente": "finDobleVictima"
+          }
+        ]
+      },
+      "n2b": {
+        "situacion": "Ya estás dentro de la galería. El detector empieza a sonar y sientes un leve dolor de cabeza.",
+        "opciones": [
+          {
+            "texto": "Salgo de inmediato por donde entré hacia aire fresco y aviso",
+            "correcta": true,
+            "feedback": "Correcto. El dolor de cabeza es un síntoma temprano de intoxicación por CO. Lo primero es salir a aire fresco por la ruta conocida y avisar.",
+            "siguiente": "n3b"
+          },
+          {
+            "texto": "Sigo hasta el frente, ya casi llego",
+            "correcta": false,
+            "feedback": "Incorrecto. El CO actúa rápido y nubla el juicio. Avanzar te aleja del aire fresco y hace más difícil salir.",
+            "siguiente": "finIntoxicado"
+          }
+        ]
+      },
+      "n2c": {
+        "situacion": "Con el trapo en la cara avanzas unos metros. Te mareas y te cuesta pensar con claridad.",
+        "opciones": [
+          {
+            "texto": "Me pongo el autorrescatador y salgo hacia aire fresco",
+            "correcta": true,
+            "feedback": "Correcto. El autorrescatador es para escapar de una atmósfera peligrosa. Úsalo apenas notes síntomas y sal de la zona.",
+            "siguiente": "n3b"
+          },
+          {
+            "texto": "Me siento un rato a descansar hasta que se me pase",
+            "correcta": false,
+            "feedback": "Incorrecto. Quedarte en el lugar sigue exponiéndote al gas. El mareo no se pasa mientras respires ese aire.",
+            "siguiente": "finIntoxicado"
+          }
+        ]
+      },
+      "n3b": {
+        "situacion": "Llegaste a aire fresco. Todavía te duele la cabeza y te sientes débil.",
+        "opciones": [
+          {
+            "texto": "Informo al supervisor lo que pasó y pido atención médica",
+            "correcta": true,
+            "feedback": "Correcto. Los efectos del CO pueden seguir aunque ya estés afuera. Necesitas revisión médica, y reportar evita que otro trabajador cometa el mismo error.",
+            "siguiente": "finAprendizaje"
+          },
+          {
+            "texto": "No digo nada y vuelvo a entrar cuando me sienta mejor",
+            "correcta": false,
+            "feedback": "Incorrecto. Ocultar el incidente pone en riesgo a todos. Volver a entrar sin ventilar ni medir repite la misma exposición.",
+            "siguiente": "finIntoxicado"
+          }
+        ]
+      },
+      "finExito": {
+        "situacion": "El equipo de rescate, con equipos de respiración, saca al trabajador a tiempo. Tú y tu compañero están bien. Ventilar, medir y avisar salvó vidas.",
+        "final": true
+      },
+      "finDobleVictima": {
+        "situacion": "A los pocos pasos te desmayas junto al trabajador. El rescate ahora debe sacar a dos personas. Sin protección, el rescatista se convierte en víctima.",
+        "final": true
+      },
+      "finIntoxicado": {
+        "situacion": "Pierdes el conocimiento por el monóxido de carbono. Un compañero da la alarma y te rescatan con equipo de respiración. Terminas en el hospital.",
+        "final": true
+      },
+      "finAprendizaje": {
+        "situacion": "Te atienden a tiempo y te recuperas. La galería se ventila y se mide antes de volver a entrar. Saliste bien, pero el riesgo se pudo evitar desde el inicio.",
+        "final": true
+      }
+    }
+  }
+]
