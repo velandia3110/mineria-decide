@@ -1,0 +1,116 @@
+[
+  {
+    "id": "ventilacion",
+    "titulo": "Ventilación y gases",
+    "icono": "cloudy-outline",
+    "color": "#5AC8FA",
+    "descripcion": "Aire limpio en el socavón, gases peligrosos y uso del detector.",
+    "temas": [
+      {
+        "id": "ventilacion-socavon",
+        "titulo": "Ventilación en socavones",
+        "icono": "sync-outline",
+        "parrafos": [
+          "La ventilación lleva aire fresco desde la superficie hasta los frentes de trabajo y saca el aire contaminado. Sin ella, el oxígeno baja y los gases se acumulan.",
+          "El aire debe llegar a todos los frentes. Los ventiladores, ductos y puertas de ventilación no se apagan, no se dañan ni se dejan abiertos sin autorización.",
+          "Las zonas sin ventilación, abandonadas o sin uso pueden tener aire peligroso. Nunca entres a ellas sin medir antes y sin autorización."
+        ],
+        "puntosClave": [
+          "Sin ventilación no se trabaja.",
+          "No apagues ni dañes ventiladores, ductos o puertas.",
+          "No entres a labores abandonadas o sin aire.",
+          "Reporta cualquier falla de ventilación de inmediato."
+        ]
+      },
+      {
+        "id": "gases-peligrosos",
+        "titulo": "Gases peligrosos",
+        "icono": "skull-outline",
+        "parrafos": [
+          "Metano (CH4): no tiene olor ni color y puede explotar al mezclarse con el aire. Monóxido de carbono (CO): no se ve ni se huele, sale de voladuras, motores e incendios y es muy tóxico.",
+          "Dióxido de carbono (CO2): es más pesado que el aire y se acumula en partes bajas. Ácido sulfhídrico (H2S): huele a huevo podrido, pero en altas concentraciones paraliza el olfato y puede matar rápido.",
+          "Falta de oxígeno: el aire normal tiene cerca de 20.9 % de oxígeno. Por debajo de 19.5 % el aire es deficiente y peligroso: causa mareo, confusión y desmayo."
+        ],
+        "puntosClave": [
+          "Muchos gases no se ven ni se huelen: confía en el detector, no en tus sentidos.",
+          "El CH4 puede explotar; el CO y el H2S envenenan.",
+          "Oxígeno por debajo de 19.5 % = aire peligroso.",
+          "El CO2 se acumula abajo; el CH4 tiende a subir."
+        ]
+      },
+      {
+        "id": "detector-multigas",
+        "titulo": "Detector multigás y alarmas",
+        "icono": "speedometer-outline",
+        "parrafos": [
+          "Antes de entrar, revisa que el detector esté cargado, calibrado y haga la prueba de funcionamiento. Mide al ingresar y durante todo el turno, sobre todo en frentes nuevos y después de voladuras.",
+          "Si suena la alarma o sientes mareo o dolor de cabeza: no sigas avanzando. Sal por la ruta de evacuación hacia el aire fresco y avisa a tus compañeros.",
+          "Reporta al supervisor qué gas marcó y dónde. Nunca entres a rescatar a un compañero caído sin equipo de respiración: muchas víctimas en minas son personas que entraron a rescatar sin protección."
+        ],
+        "puntosClave": [
+          "Revisa el detector antes de cada turno.",
+          "Alarma = no ingresar, salir a aire fresco y reportar.",
+          "Nunca rescates sin equipo de respiración.",
+          "No vuelvas a entrar hasta que el área sea medida y autorizada."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "explosivos",
+    "titulo": "Explosivos y voladura",
+    "icono": "flame-outline",
+    "color": "#FF9500",
+    "descripcion": "Almacenamiento, manipulación, tiros fallados y voladura segura.",
+    "temas": [
+      {
+        "id": "almacenamiento",
+        "titulo": "Almacenamiento de explosivos",
+        "icono": "cube-outline",
+        "parrafos": [
+          "Los explosivos y los detonadores se guardan siempre por separado, en polvorines o cajas distintas, cerrados con llave y señalizados.",
+          "El lugar debe estar seco, ventilado, lejos de fuentes de calor, chispas, equipos eléctricos y combustibles. Solo personal autorizado entra al polvorín.",
+          "Lleva un registro de lo que entra y sale. Lo que no se usa en el turno se devuelve al polvorín; nunca se deja en el frente ni se lleva a casa."
+        ],
+        "puntosClave": [
+          "Detonadores y explosivos siempre separados.",
+          "Polvorín cerrado, seco, señalizado y lejos del calor.",
+          "Solo personal autorizado.",
+          "Registra todo y devuelve lo que sobra."
+        ]
+      },
+      {
+        "id": "manipulacion",
+        "titulo": "Manipulación segura",
+        "icono": "hand-left-outline",
+        "parrafos": [
+          "Solo el personal capacitado y autorizado manipula explosivos. Transporta explosivos y detonadores en recipientes separados y nunca en el bolsillo.",
+          "No fumes ni uses llama abierta cerca de explosivos. No golpees, no tires ni fuerces los cartuchos o detonadores, y no uses herramientas de metal para cargar los taladros.",
+          "Usa solo material en buen estado. Si un explosivo está dañado, húmedo o vencido, no lo uses: sepáralo y repórtalo."
+        ],
+        "puntosClave": [
+          "Solo personal autorizado y capacitado.",
+          "Nada de fuego ni golpes cerca de explosivos.",
+          "Carga con atacador de madera o plástico, no de metal.",
+          "Material dañado o vencido: no se usa, se reporta."
+        ]
+      },
+      {
+        "id": "tiros-fallados",
+        "titulo": "Tiros fallados y voladura",
+        "icono": "warning-outline",
+        "parrafos": [
+          "Antes de disparar, avisa con la señal acordada, saca a todo el personal del área y pon vigías en todos los accesos para que nadie entre.",
+          "Después del disparo, espera el tiempo reglamentario y la ventilación del frente antes de volver. Cuenta los tiros: si salieron menos de los cargados, hay un tiro fallado o quedado.",
+          "Un tiro fallado nunca se reperfora ni se intenta sacar. Señaliza el lugar, no dejes pasar a nadie y repórtalo al supervisor para que el personal autorizado lo trate."
+        ],
+        "puntosClave": [
+          "Aviso, evacuación y vigías antes de cada voladura.",
+          "Espera el tiempo reglamentario y la ventilación antes de entrar.",
+          "Tiro fallado: nunca reperforar ni extraer.",
+          "Señaliza y reporta de inmediato."
+        ]
+      }
+    ]
+  }
+]
