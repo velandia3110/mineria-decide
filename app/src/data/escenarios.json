@@ -8,6 +8,7 @@
     "nodos": {
       "n1": {
         "situacion": "Terminó la voladura en la galería 3. Te piden entrar a revisar el frente. Notas que el ventilador auxiliar está apagado y todavía hay algo de humo.",
+        "tema": "ventilacion-socavon",
         "opciones": [
           {
             "texto": "Pido encender el ventilador, espero y mido el aire con el detector multigás antes de entrar",
@@ -31,6 +32,7 @@
       },
       "n2": {
         "situacion": "El ventilador ya funciona. En la entrada de la galería, el detector multigás suena: marca CO alto y oxígeno bajo.",
+        "tema": "detector-multigas",
         "opciones": [
           {
             "texto": "No entro. Aviso al supervisor y espero a que la ventilación limpie el aire",
@@ -48,6 +50,7 @@
       },
       "n3": {
         "situacion": "Una nueva medición sale bien y entras con tu compañero. Más adelante encuentras a un trabajador de otro turno caído en el piso. Tu detector vuelve a sonar.",
+        "tema": "gases-peligrosos",
         "opciones": [
           {
             "texto": "Retrocedo a aire fresco con mi compañero, aviso por radio y pido rescate con equipo de respiración",
@@ -71,6 +74,7 @@
       },
       "n2b": {
         "situacion": "Ya estás dentro de la galería. El detector empieza a sonar y sientes un leve dolor de cabeza.",
+        "tema": "detector-multigas",
         "opciones": [
           {
             "texto": "Salgo de inmediato por donde entré hacia aire fresco y aviso",
@@ -88,6 +92,7 @@
       },
       "n2c": {
         "situacion": "Con el trapo en la cara avanzas unos metros. Te mareas y te cuesta pensar con claridad.",
+        "tema": "gases-peligrosos",
         "opciones": [
           {
             "texto": "Me pongo el autorrescatador y salgo hacia aire fresco",
@@ -105,6 +110,7 @@
       },
       "n3b": {
         "situacion": "Llegaste a aire fresco. Todavía te duele la cabeza y te sientes débil.",
+        "tema": "gases-peligrosos",
         "opciones": [
           {
             "texto": "Informo al supervisor lo que pasó y pido atención médica",
@@ -134,6 +140,147 @@
       },
       "finAprendizaje": {
         "situacion": "Te atienden a tiempo y te recuperas. La galería se ventila y se mide antes de volver a entrar. Saliste bien, pero el riesgo se pudo evitar desde el inicio.",
+        "final": true
+      }
+    }
+  },
+  {
+    "id": "tiro-fallado",
+    "titulo": "Tiro fallado en el frente",
+    "categoriaId": "explosivos",
+    "descripcion": "Después de la voladura cuentas menos detonaciones de las esperadas. ¿Cómo actúas?",
+    "inicio": "n1",
+    "nodos": {
+      "n1": {
+        "situacion": "Se cargaron 12 taladros en el frente. Desde el refugio cuentas las detonaciones y solo escuchas 10.",
+        "tema": "tiros-fallados",
+        "opciones": [
+          {
+            "texto": "Aviso al supervisor, espero el tiempo establecido y la ventilación antes de acercarme",
+            "correcta": true,
+            "feedback": "Correcto. Si se cuentan menos detonaciones, puede haber tiros fallados. Un tiro puede detonar con retraso: se espera el tiempo establecido, se ventila y se reporta.",
+            "siguiente": "n2"
+          },
+          {
+            "texto": "Entro de inmediato a revisar si quedaron tiros",
+            "correcta": false,
+            "feedback": "Incorrecto. Un tiro fallado puede detonar tarde y el frente aún tiene gases. Entrar antes de tiempo te expone a ambos riesgos.",
+            "siguiente": "n2b"
+          },
+          {
+            "texto": "Seguro conté mal, sigo con el desatado normal",
+            "correcta": false,
+            "feedback": "Incorrecto. Ante cualquier duda en el conteo se asume que hay tiros fallados. Trabajar como si nada puede llevarte a golpear explosivo sin detonar.",
+            "siguiente": "n2c"
+          }
+        ]
+      },
+      "n2": {
+        "situacion": "Pasado el tiempo y con el frente ventilado, inspeccionas junto al supervisor. Encuentras un taladro con la guía intacta: es un tiro fallado.",
+        "tema": "tiros-fallados",
+        "opciones": [
+          {
+            "texto": "Señalizo y aíslo la zona, y reporto para que lo trate el personal autorizado",
+            "correcta": true,
+            "feedback": "Correcto. Un tiro fallado se señaliza, se aísla y lo resuelve personal autorizado con el procedimiento de la empresa. Nadie más trabaja en esa zona.",
+            "siguiente": "n3"
+          },
+          {
+            "texto": "Saco el explosivo del taladro con una cucharilla",
+            "correcta": false,
+            "feedback": "Incorrecto. Nunca se extrae explosivo de un tiro fallado. La fricción o un golpe pueden detonarlo en tus manos.",
+            "siguiente": "finAccidente"
+          },
+          {
+            "texto": "Perforo un taladro al lado para seguir avanzando",
+            "correcta": false,
+            "feedback": "Incorrecto. Nunca se reperfora cerca de un tiro fallado ni en sus restos. La broca puede alcanzar el explosivo y detonarlo.",
+            "siguiente": "finAccidente"
+          }
+        ]
+      },
+      "n2b": {
+        "situacion": "Entras antes de tiempo. El humo aún es denso y ves un taladro con explosivo que no detonó.",
+        "tema": "tiros-fallados",
+        "opciones": [
+          {
+            "texto": "Salgo de inmediato, aviso al supervisor y espero el tiempo y la ventilación",
+            "correcta": true,
+            "feedback": "Correcto. Corregir a tiempo es lo importante: retirarte y avisar evita que el tiro fallado o los gases te alcancen.",
+            "siguiente": "n3"
+          },
+          {
+            "texto": "Me acerco a revisarlo de cerca",
+            "correcta": false,
+            "feedback": "Incorrecto. Acercarte a un tiro fallado sin esperar el tiempo establecido es el peor momento para hacerlo: puede detonar con retraso.",
+            "siguiente": "finAccidente"
+          }
+        ]
+      },
+      "n2c": {
+        "situacion": "Mientras desatas rocas con la barretilla, ves restos de explosivo sin detonar entre el material.",
+        "tema": "tiros-fallados",
+        "opciones": [
+          {
+            "texto": "Detengo el trabajo, me alejo, señalizo y reporto",
+            "correcta": true,
+            "feedback": "Correcto. Ante restos de explosivo se para todo, se señaliza y se reporta. Ese material lo maneja solo personal autorizado.",
+            "siguiente": "n3"
+          },
+          {
+            "texto": "Los saco con la barretilla para seguir trabajando",
+            "correcta": false,
+            "feedback": "Incorrecto. Golpear o raspar explosivo sin detonar con herramientas metálicas puede hacerlo detonar.",
+            "siguiente": "finAccidente"
+          }
+        ]
+      },
+      "n3": {
+        "situacion": "Mientras llega el personal autorizado, el jefe de turno te pide traer más explosivos y detonadores del polvorín. Te ofrece una sola caja para llevar todo.",
+        "tema": "almacenamiento",
+        "opciones": [
+          {
+            "texto": "Llevo explosivos y detonadores por separado, cada uno en su recipiente",
+            "correcta": true,
+            "feedback": "Correcto. Explosivos y detonadores siempre se almacenan y transportan por separado. Un detonador que se activa junto al explosivo puede iniciar todo.",
+            "siguiente": "finExito"
+          },
+          {
+            "texto": "Los llevo juntos en la caja para ahorrar un viaje",
+            "correcta": false,
+            "feedback": "Incorrecto. Juntar detonadores y explosivos convierte cualquier golpe o chispa en una posible detonación de toda la carga.",
+            "siguiente": "n3b"
+          }
+        ]
+      },
+      "n3b": {
+        "situacion": "Al pasar por una zona estrecha, la caja con explosivos y detonadores se golpea contra la roca.",
+        "tema": "manipulacion",
+        "opciones": [
+          {
+            "texto": "Me detengo, la dejo con cuidado, separo detonadores y explosivos y reporto",
+            "correcta": true,
+            "feedback": "Correcto. Ante un golpe se detiene la marcha, se revisa sin prisa y se corrige el error de origen: separar. Reportarlo ayuda a que no se repita.",
+            "siguiente": "finAprendizaje"
+          },
+          {
+            "texto": "Sigo caminando, no pasó nada",
+            "correcta": false,
+            "feedback": "Incorrecto. Un golpe puede dañar un detonador y dejarlo sensible. Seguir sin revisar ni separar mantiene el riesgo todo el camino.",
+            "siguiente": "finAccidente"
+          }
+        ]
+      },
+      "finExito": {
+        "situacion": "El personal autorizado resuelve el tiro fallado y el material llega separado y seguro. El turno continúa sin incidentes.",
+        "final": true
+      },
+      "finAccidente": {
+        "situacion": "Se produce una detonación inesperada. Resultas con lesiones graves y el frente queda clausurado para investigación.",
+        "final": true
+      },
+      "finAprendizaje": {
+        "situacion": "No hubo detonación. El supervisor revisa el material, se reporta el incidente y se refuerza el procedimiento de transporte. Saliste bien, pero el riesgo se pudo evitar.",
         "final": true
       }
     }
