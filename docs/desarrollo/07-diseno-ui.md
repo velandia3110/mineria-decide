@@ -20,10 +20,10 @@ La interfaz sigue el estilo de iOS (Human Interface Guidelines): fondo gris clar
 
 ## Header — [App.js](../../app/App.js)
 
-- `screenOptions` ([L24-L31](../../app/App.js#L24-L31)): header del mismo gris que el fondo y sin línea de sombra, de modo que el contenido parece continuar debajo. Flecha y "Atrás" en azul.
-- `tituloGrande` ([L13-L17](../../app/App.js#L13-L17)): título grande de iOS en `Inicio`, `Teoria` y `Escenarios`; al hacer scroll se encoge al centro. Lo dibuja `react-native-screens` de forma nativa, así que no cuesta JavaScript. En Android se ve como un header normal.
+- `screenOptions` ([L25-L32](../../app/App.js#L25-L32)): header del mismo gris que el fondo y sin línea de sombra, de modo que el contenido parece continuar debajo. Flecha y "Atrás" en azul.
+- `tituloGrande` ([L14-L18](../../app/App.js#L14-L18)): título grande de iOS en `Inicio`, `Teoria` y `Escenarios`; al hacer scroll se encoge al centro. Lo dibuja `react-native-screens` de forma nativa, así que no cuesta JavaScript. En Android se ve como un header normal.
 - Para que el título grande funcione, el primer hijo de la pantalla debe ser un `ScrollView` con `contentInsetAdjustmentBehavior="automatic"` (p. ej. [TeoriaScreen.js:9](../../app/src/screens/TeoriaScreen.js#L9)).
-- `StatusBar style="dark"` ([L22](../../app/App.js#L22)): iconos oscuros sobre el fondo claro.
+- `StatusBar style="dark"` ([L23](../../app/App.js#L23)): iconos oscuros sobre el fondo claro.
 
 ## Componentes
 
@@ -76,6 +76,10 @@ La interfaz sigue el estilo de iOS (Human Interface Guidelines): fondo gris clar
 - [L13](../../app/src/components/BotonGrande.js#L13): opacidad 0.75 al presionar y 0.4 deshabilitado.
 - [L23](../../app/src/components/BotonGrande.js#L23): `minHeight: 52`, la altura de un botón grande de iOS.
 
+### Barra de progreso (DesempenoScreen)
+
+Un `View` gris con otro `View` dentro cuyo ancho es el porcentaje ([DesempenoScreen.js:31-33](../../app/src/screens/DesempenoScreen.js#L31-L33)). No se usa librería de gráficos: para una barra horizontal sería una dependencia pesada sin ganancia.
+
 ### PanelFeedback
 
 Detalle en [05-pantallas-escenarios.md](05-pantallas-escenarios.md#3-panelfeedback-hu03). Visualmente: una tarjeta centrada con un icono de 64 px (`checkmark-circle` verde o `close-circle` rojo), la palabra del resultado, la opción elegida y la explicación, con el botón "Continuar" debajo.
@@ -88,7 +92,8 @@ Detalle en [05-pantallas-escenarios.md](05-pantallas-escenarios.md#3-panelfeedba
 | Categorías (`teoria.json`) | `cloudy-outline` (ventilación), `flame-outline` (explosivos) |
 | Temas (`teoria.json`) | `sync-outline`, `skull-outline`, `speedometer-outline`, `cube-outline`, `hand-left-outline`, `warning-outline` |
 | Puntos clave | `warning` (encabezado), `checkmark-circle` (cada punto) |
-| Feedback / fin | `checkmark-circle`, `close-circle`, `flag` |
+| Feedback / resumen | `checkmark-circle`, `close-circle`, `flag`, `speedometer-outline` (desempeño), `ribbon-outline` (sin errores) |
+| Mi desempeño | `stats-chart-outline` (Inicio y estado vacío), `alert-circle` (necesita refuerzo) |
 | Botones | `play-circle-outline`, `arrow-forward`, `refresh`, `arrow-back` |
 | Filas | `chevron-forward` |
 

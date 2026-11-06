@@ -39,6 +39,7 @@ Arreglo de escenarios.
 | Campo | Tipo | Descripción |
 |---|---|---|
 | `situacion` | string | Lo que vive el trabajador en ese momento |
+| `tema` | string (opcional) | `id` de un tema de `teoria.json` dentro de la categoría del escenario. Si el usuario se equivoca en este nodo, el resumen le recomienda ese tema ([08-resumen-desempeno.md](08-resumen-desempeno.md)). |
 | `opciones` | opcion[] | 2 o 3 opciones recomendado |
 
 ### Nodo final
@@ -91,8 +92,8 @@ flowchart TD
   n3b -->|"Informar y pedir atención médica"| finAprendizaje
   n3b -->|"Callar y volver a entrar"| finIntoxicado
 
-  linkStyle 0,3,5,8,10,12 stroke:#2E7D32,stroke-width:3px,color:#2E7D32
-  linkStyle 1,2,4,6,7,9,11,13 stroke:#C62828,stroke-width:2px,color:#C62828
+  linkStyle 0,3,5,8,10,12 stroke:#34C759,stroke-width:3px,color:#34C759
+  linkStyle 1,2,4,6,7,9,11,13 stroke:#FF3B30,stroke-width:2px,color:#FF3B30
 ```
 
 | Ruta | Decisiones | Resultado |
@@ -165,40 +166,55 @@ Los escenarios se escriben **a mano** en JSON. Un id mal tipeado en `siguiente` 
 
 Un nodo inalcanzable es contenido escrito que nadie verá: casi siempre indica un `siguiente` que apunta al nodo equivocado.
 
-**No revisa** (responsabilidad del autor): que haya textos/`feedback` no vacíos, que cada nodo tenga al menos una opción correcta, que `categoriaId` exista en `teoria.json`, ni que no haya ciclos (un ciclo no rompe el motor, pero el escenario nunca terminaría por esa rama).
+**No revisa** (responsabilidad del autor): que haya textos/`feedback` no vacíos, que cada nodo tenga al menos una opción correcta, ni que no haya ciclos (un ciclo no rompe el motor, pero el escenario nunca terminaría por esa rama).
 
-## 5. Guía: crear el escenario 2 (categoría `explosivos`)
+## 5. Escenario 2: `tiro-fallado`
 
-Ejemplo: "Tiro fallado en el frente", basado en el tema `tiros-fallados`.
+"Tiro fallado en el frente", categoría `explosivos`, inicio `n1`. Cada nodo de decisión indica su `tema` de teoría (entre corchetes), que alimenta las recomendaciones del resumen ([08-resumen-desempeno.md](08-resumen-desempeno.md)).
 
-1. **Diseñar en papel primero.** Dibujar el grafo: ruta correcta de ≥ 3 decisiones (HU02), al menos una rama de error con posibilidad de recuperación, y 2-4 finales. Escribir para cada opción por qué es correcta o no.
-2. **Agregar el objeto al final** del arreglo en [escenarios.json](../../app/src/data/escenarios.json) (después de `gas-galeria`; el test de ruta completa usa `escenarios[0]`, [motor.test.mjs:38](../../app/src/logic/motor.test.mjs#L38), así que no insertarlo antes).
+```mermaid
+flowchart TD
+  n1["n1 · Se oyen 10 de 12 detonaciones<br/>[tiros-fallados]"]
+  n2["n2 · Tras esperar y ventilar:<br/>taladro con guía intacta [tiros-fallados]"]
+  n2b["n2b · Entró antes de tiempo:<br/>explosivo sin detonar [tiros-fallados]"]
+  n2c["n2c · Desatando: restos de<br/>explosivo [tiros-fallados]"]
+  n3["n3 · Traer explosivos y detonadores<br/>en una caja [almacenamiento]"]
+  n3b["n3b · La caja mezclada<br/>se golpea [manipulacion]"]
+  finExito(["finExito<br/>Turno sin incidentes"])
+  finAccidente(["finAccidente<br/>Detonación, lesiones graves"])
+  finAprendizaje(["finAprendizaje<br/>Sin detonación, riesgo evitable"])
 
-   ```json
-   {
-     "id": "tiro-fallado",
-     "titulo": "Tiro fallado en el frente",
-     "categoriaId": "explosivos",
-     "descripcion": "Volviste al frente tras la voladura y faltan tiros por salir. ¿Qué haces?",
-     "inicio": "n1",
-     "nodos": {
-       "n1": {
-         "situacion": "Contaste 18 tiros pero cargaste 20.",
-         "opciones": [
-           { "texto": "Señalizo, no dejo pasar a nadie y aviso al supervisor", "correcta": true,
-             "feedback": "Correcto. Un tiro fallado puede detonar en cualquier momento. Se aísla y lo trata personal autorizado.",
-             "siguiente": "n2" },
-           { "texto": "Reperforo al lado para sacar la carga", "correcta": false,
-             "feedback": "Incorrecto. Reperforar cerca de un tiro fallado puede hacerlo detonar.",
-             "siguiente": "n2b" }
-         ]
-       },
-       "n2": { "situacion": "...", "opciones": [ ... ] },
-       "n2b": { "situacion": "...", "opciones": [ ... ] },
-       "finExito": { "situacion": "...", "final": true }
-     }
-   }
-   ```
+  n1 -->|"Avisar, esperar tiempo y ventilación"| n2
+  n1 -->|"Entrar de inmediato"| n2b
+  n1 -->|"Seguir desatando normal"| n2c
+  n2 -->|"Señalizar, aislar, reportar"| n3
+  n2 -->|"Sacar el explosivo"| finAccidente
+  n2 -->|"Reperforar al lado"| finAccidente
+  n2b -->|"Salir, avisar, esperar"| n3
+  n2b -->|"Acercarse a revisar"| finAccidente
+  n2c -->|"Parar, alejarse, señalizar"| n3
+  n2c -->|"Sacarlo con la barretilla"| finAccidente
+  n3 -->|"Llevar por separado"| finExito
+  n3 -->|"Llevar juntos"| n3b
+  n3b -->|"Detenerse, separar, reportar"| finAprendizaje
+  n3b -->|"Seguir caminando"| finAccidente
+
+  linkStyle 0,3,6,8,10,12 stroke:#34C759,stroke-width:3px,color:#34C759
+  linkStyle 1,2,4,5,7,9,11,13 stroke:#FF3B30,stroke-width:2px,color:#FF3B30
+```
+
+| Ruta | Decisiones | Resultado |
+|---|---|---|
+| n1 → n2 → n3 → finExito | 3 | 3 aciertos, 0 errores (probada en [resumen.test.mjs:27-31](../../app/src/logic/resumen.test.mjs#L27-L31)) |
+| n1 → n2b → n3 → n3b → finAprendizaje | 4 | 2 aciertos, 2 errores |
+| n1 → n2 → finAccidente | 2 | 1 acierto, 1 error |
+
+A diferencia del escenario 1, las ramas de error **se reincorporan** a la ruta principal (`n2b` y `n2c` llevan a `n3` si el usuario corrige): así se practica también la segunda parte del procedimiento (transporte separado).
+
+## 6. Guía: crear un escenario nuevo
+
+1. **Diseñar en papel primero.** Dibujar el grafo: ruta correcta de ≥ 3 decisiones (HU02), al menos una rama de error con posibilidad de recuperación, y 2-4 finales. Escribir para cada opción por qué es correcta o no, y qué **tema** de la teoría cubre cada nodo.
+2. **Agregar el objeto al final** del arreglo en [escenarios.json](../../app/src/data/escenarios.json). El test de ruta completa usa `escenarios[0]` ([motor.test.mjs:38](../../app/src/logic/motor.test.mjs#L38)), así que no insertarlo antes de `gas-galeria`. Copiar la estructura de `tiro-fallado`.
 
    Convención de ids: `n1, n2, n3` para la ruta principal, sufijos `b`, `c` para ramas de error, `finXxx` para finales. Los ids solo tienen que ser únicos dentro del escenario.
 3. **Validar:** desde `app/`:
@@ -207,7 +223,7 @@ Ejemplo: "Tiro fallado en el frente", basado en el tema `tiros-fallados`.
    pnpm test
    ```
 
-   El test [motor.test.mjs:48-52](../../app/src/logic/motor.test.mjs#L48-L52) ejecuta `validarEscenario` sobre **todos** los escenarios del JSON. Si falla, `assert.deepEqual` muestra el arreglo de mensajes (p. ej. `Nodo n2: siguiente inexistente n3x`). Corregir hasta que pase.
-4. **Probar en la app** (`pnpm expo start`): la tarjeta aparece sola en "Escenarios" ([EscenariosScreen.js:27](../../app/src/screens/EscenariosScreen.js#L27)). Recorrer **cada rama** al menos una vez leyendo los `feedback`.
-5. **Revisión manual** de lo que el validador no cubre: cada nodo de decisión tiene al menos una opción `correcta: true`; `categoriaId` es `explosivos` exacto; ningún texto vacío.
-6. (Opcional) Agregar un test de ruta correcta para el escenario nuevo, copiando [motor.test.mjs:37-46](../../app/src/logic/motor.test.mjs#L37-L46) con `escenarios[1]` y el nodo final esperado.
+   - [motor.test.mjs:48-52](../../app/src/logic/motor.test.mjs#L48-L52) ejecuta `validarEscenario` sobre **todos** los escenarios (siguientes inexistentes, nodos sin opciones, nodos inalcanzables).
+   - [resumen.test.mjs:46-55](../../app/src/logic/resumen.test.mjs#L46-L55) verifica que `categoriaId` y cada `tema` existan en `teoria.json`.
+4. **Probar en la app** (`pnpm expo start`): la fila aparece sola en "Escenarios" con el icono de su categoría. Recorrer **cada rama** al menos una vez leyendo los `feedback` y revisando el resumen final.
+5. **Revisión manual** de lo que las pruebas no cubren: cada nodo de decisión tiene al menos una opción `correcta: true`; ningún texto vacío; el lenguaje es el del trabajador (frases cortas).

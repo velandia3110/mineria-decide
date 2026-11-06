@@ -4,11 +4,11 @@
 
 | Qué | Cómo | Por qué |
 | --- | --- | --- |
-| Lógica pura ([motor.js](../../app/src/logic/motor.js)) | Pruebas automáticas con `node:test` (incluido en Node) | Es donde están las reglas que pueden romperse en silencio: ramas, conteo, grafo del JSON. |
+| Lógica pura ([motor.js](../../app/src/logic/motor.js), [resumen.js](../../app/src/logic/resumen.js)) | Pruebas automáticas con `node:test` (incluido en Node) | Es donde están las reglas que pueden romperse en silencio: ramas, conteo, grafo del JSON. |
 | Que la app compile | `pnpm expo export` (verificación de bundle) | Detecta imports rotos o errores de sintaxis en pantallas/componentes sin emulador. |
 | Pantallas y flujos | Checklist manual en teléfono (abajo) | Son pocas pantallas; probar UI automáticamente (Jest + Testing Library) añadiría dependencias y configuración que el equipo tendría que mantener. |
 
-No se usa Jest ni ninguna dependencia de pruebas: `motor.js` no importa React ni AsyncStorage, así que node lo ejecuta directo.
+No se usa Jest ni ninguna dependencia de pruebas: `motor.js` y `resumen.js` no importan React ni AsyncStorage, así que node lo ejecuta directo.
 
 ## Pruebas automáticas — [motor.test.mjs](../../app/src/logic/motor.test.mjs)
 
@@ -21,7 +21,18 @@ El archivo carga el escenario real desde `escenarios.json` ([L6](../../app/src/l
 | recorrido completo del escenario real por la ruta correcta | [L37-L46](../../app/src/logic/motor.test.mjs#L37-L46) | Eligiendo siempre la opción correcta del escenario 1 se llega a `finExito` con 3 aciertos: confirma las ≥3 decisiones encadenadas de HU02 con el contenido real. |
 | validarEscenario detecta errores y acepta los escenarios reales | [L48-L52](../../app/src/logic/motor.test.mjs#L48-L52) | Un escenario roto produce 3 errores (siguiente inexistente, nodo no final sin opciones, nodo inalcanzable) y **todos** los escenarios de `escenarios.json` son válidos. |
 
-El último test es la red de seguridad del contenido: `validarEscenario` no se ejecuta dentro de la app, así que cualquier edición de `escenarios.json` (como el escenario 2) debe pasar `pnpm test` antes de publicarse. Si el test 3 falla tras editar el escenario 1, actualiza `finExito` o el número de aciertos esperado.
+El último test es la red de seguridad del contenido: `validarEscenario` no se ejecuta dentro de la app, así que cualquier edición de `escenarios.json` debe pasar `pnpm test` antes de publicarse. Si el test 3 falla tras editar el escenario 1, actualiza `finExito` o el número de aciertos esperado.
+
+## Pruebas automáticas — [resumen.test.mjs](../../app/src/logic/resumen.test.mjs)
+
+| Test | Líneas | Qué asegura |
+| --- | --- | --- |
+| resumir lista decisiones y recomienda solo temas de los errores | [L16-L25](../../app/src/logic/resumen.test.mjs#L16-L25) | Jugando el escenario 1 con un error en `n1`: 3 decisiones, 2 aciertos, 67 %, y se recomienda solo el tema de `n1` (HU06). |
+| resumir sin errores no recomienda temas | [L27-L31](../../app/src/logic/resumen.test.mjs#L27-L31) | Ruta correcta del escenario 2: 100 % y ninguna recomendación. También confirma que el escenario 2 se puede completar. |
+| desempenoPorCategoria acumula y ordena | [L33-L44](../../app/src/logic/resumen.test.mjs#L33-L44) | Suma intentos por categoría, calcula el % sobre todas las decisiones, marca `necesitaRefuerzo` bajo 70 % y ordena de peor a mejor (HU05). Un historial vacío da `[]`. |
+| escenarios ↔ teoría | [L46-L55](../../app/src/logic/resumen.test.mjs#L46-L55) | Cada `categoriaId` y cada `tema` de los escenarios existen en `teoria.json`. Evita recomendaciones que lleven a "Tema no encontrado". |
+
+En total `pnpm test` ejecuta **8 pruebas**.
 
 ### Cómo ejecutarlas
 
@@ -77,8 +88,23 @@ Probar en un teléfono Android real con Expo Go (idealmente uno de gama básica)
 - [ ] Terminar el escenario, cerrar y reabrir: al entrar empieza desde la decisión 1 (no se queda en el final).
 - [ ] "Reintentar" en el final empieza desde la decisión 1.
 
-### Pendientes (añadir cuando se implementen)
+### HU05 — Desempeño por categoría (RF07)
 
-- [ ] HU05: tras terminar al menos un escenario, la pantalla de desempeño muestra aciertos/errores acumulados por categoría.
-- [ ] HU06: el resumen final incluye recomendaciones.
-- [ ] Escenario 2 jugable de inicio a fin y `pnpm test` en verde.
+- [ ] Sin haber completado escenarios, "Mi desempeño" muestra el estado vacío y el botón "Ir a escenarios".
+- [ ] Tras terminar un escenario y volver, la categoría aparece con su porcentaje, intentos, aciertos y errores.
+- [ ] Con desempeño menor a 70 % aparece "Necesita refuerzo" en naranja; la categoría con peor resultado queda arriba.
+- [ ] Tocar una categoría abre la teoría.
+
+### HU06 — Resumen al finalizar (RF10)
+
+- [ ] Al terminar se ven aciertos, errores, porcentaje y la lista de decisiones con check o cruz.
+- [ ] Las decisiones incorrectas repiten su explicación.
+- [ ] Con errores aparece "Te recomendamos repasar" y tocar un tema abre su teoría; sin errores aparece el mensaje de felicitación.
+
+### Escenario 2
+
+- [ ] "Tiro fallado en el frente" aparece en la lista con el icono de explosivos y se juega de inicio a fin por cada rama.
+
+## Pruebas con usuarios
+
+El protocolo de usabilidad con 2-3 usuarios (tareas, métricas, SUS y plantilla de hallazgos) está en [09-pruebas-usabilidad.md](09-pruebas-usabilidad.md).

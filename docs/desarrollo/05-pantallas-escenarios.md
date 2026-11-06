@@ -10,7 +10,7 @@ Pantallas que conectan el [motor](03-motor-escenarios.md) con el usuario y con e
 | [Fila.js](../../app/src/components/Fila.js), [Grupo.js](../../app/src/components/Grupo.js) | Filas agrupadas estilo iOS: la lista de escenarios y las opciones de cada decisión |
 | [BotonGrande.js](../../app/src/components/BotonGrande.js) | Botones de acción con icono (Continuar, Reintentar, Volver) |
 
-Rutas en [App.js:36-37](../../app/App.js#L36-L37). El header de `Escenario` toma `route.params.titulo`, igual que `Tema` (ver [02-modulo-teorico.md](02-modulo-teorico.md#por-qué-se-pasa-titulo-en-los-parámetros)).
+Rutas en [App.js:37-38](../../app/App.js#L37-L38). El header de `Escenario` toma `route.params.titulo`, igual que `Tema` (ver [02-modulo-teorico.md](02-modulo-teorico.md#por-qué-se-pasa-titulo-en-los-parámetros)).
 
 ---
 
@@ -36,17 +36,17 @@ El `useCallback(..., [])` es obligatorio con `useFocusEffect`: sin él la funci�
 
 | Variable | Línea | Contenido |
 |---|---|---|
-| `escenario` | [L14](../../app/src/screens/EscenarioScreen.js#L14) | Objeto del JSON buscado por `route.params.escenarioId` (no es estado de React: es una referencia fija al JSON importado) |
-| `estado` | [L15](../../app/src/screens/EscenarioScreen.js#L15) | Estado del motor `{ escenarioId, nodoId, decisiones }`. `null` mientras se carga. |
-| `feedback` | [L16](../../app/src/screens/EscenarioScreen.js#L16) | La `opcion` recién elegida, o `null`. Si no es `null`, se muestra el panel de feedback. |
-| `nodo` | [L26](../../app/src/screens/EscenarioScreen.js#L26) | Derivado: `nodoActual(escenario, estado)` |
-| `terminado` | [L27](../../app/src/screens/EscenarioScreen.js#L27) | Derivado: `!feedback && esFinal(...)`. El `!feedback` asegura que el feedback de la **última** decisión se vea antes del fin. |
+| `escenario` | [L13](../../app/src/screens/EscenarioScreen.js#L13) | Objeto del JSON buscado por `route.params.escenarioId` (no es estado de React: es una referencia fija al JSON importado) |
+| `estado` | [L14](../../app/src/screens/EscenarioScreen.js#L14) | Estado del motor `{ escenarioId, nodoId, decisiones }`. `null` mientras se carga. |
+| `feedback` | [L15](../../app/src/screens/EscenarioScreen.js#L15) | La `opcion` recién elegida, o `null`. Si no es `null`, se muestra el panel de feedback. |
+| `nodo` | [L25](../../app/src/screens/EscenarioScreen.js#L25) | Derivado: `nodoActual(escenario, estado)` |
+| `terminado` | [L26](../../app/src/screens/EscenarioScreen.js#L26) | Derivado: `!feedback && esFinal(...)`. El `!feedback` asegura que el feedback de la **última** decisión se vea antes del fin. |
 
 `nodo` y `terminado` se calculan en cada render en vez de guardarse en `useState`: así no pueden desincronizarse de `estado`.
 
 ### Reanudar al montar (HU04)
 
-[L18-L22](../../app/src/screens/EscenarioScreen.js#L18-L22):
+[L17-L21](../../app/src/screens/EscenarioScreen.js#L17-L21):
 
 ```js
 cargarProgreso(escenario.id).then((guardado) =>
@@ -62,17 +62,17 @@ Se reanuda solo si las tres condiciones se cumplen; si no, se empieza de cero:
 | `escenario.nodos[guardado.nodoId]` | Se editó el JSON y el nodo guardado ya no existe → sin esto, `nodo` sería `undefined` y la pantalla fallaría |
 | `!esFinal(...)` | Un progreso que quedó en un nodo final (no debería pasar porque se borra al terminar, pero si falló el borrado no se reanuda un escenario ya acabado) |
 
-Mientras `estado` es `null` se muestra un `ActivityIndicator` ([L24](../../app/src/screens/EscenarioScreen.js#L24)). La dependencia `[escenario]` no re-dispara el efecto: el objeto viene del JSON importado y su referencia no cambia.
+Mientras `estado` es `null` se muestra un `ActivityIndicator` ([L23](../../app/src/screens/EscenarioScreen.js#L23)). La dependencia `[escenario]` no re-dispara el efecto: el objeto viene del JSON importado y su referencia no cambia.
 
-### `onElegir(indice)` — [L29-L40](../../app/src/screens/EscenarioScreen.js#L29-L40)
+### `onElegir(indice)` — [L28-L39](../../app/src/screens/EscenarioScreen.js#L28-L39)
 
 Orden: **motor → persistir → mostrar feedback**.
 
-1. [L30](../../app/src/screens/EscenarioScreen.js#L30): `elegir()` calcula el nuevo estado y la opción.
+1. [L29](../../app/src/screens/EscenarioScreen.js#L29): `elegir()` calcula el nuevo estado y la opción.
 2. Persistencia según a dónde se llegó:
-   - Nodo final ([L31-L34](../../app/src/screens/EscenarioScreen.js#L31-L34)): `guardarResultado({ escenarioId, categoriaId, aciertos, errores, fecha })` en el historial y `borrarProgreso` (ya no hay nada que reanudar; el badge desaparece).
-   - Nodo intermedio ([L35-L36](../../app/src/screens/EscenarioScreen.js#L35-L36)): `guardarProgreso` con el nuevo estado.
-3. [L38-L39](../../app/src/screens/EscenarioScreen.js#L38-L39): `setEstado` y `setFeedback` → re-render con la vista de feedback.
+   - Nodo final ([L30-L33](../../app/src/screens/EscenarioScreen.js#L30-L33)): `guardarResultado({ escenarioId, categoriaId, aciertos, errores, fecha })` en el historial y `borrarProgreso` (ya no hay nada que reanudar; el badge desaparece).
+   - Nodo intermedio ([L34-L35](../../app/src/screens/EscenarioScreen.js#L34-L35)): `guardarProgreso` con el nuevo estado.
+3. [L37-L38](../../app/src/screens/EscenarioScreen.js#L37-L38): `setEstado` y `setFeedback` → re-render con la vista de feedback.
 
 Las llamadas a storage **no se esperan** (`await`): la UI responde al instante y `storage.js` traga los errores, así que un fallo de escritura nunca bloquea la práctica (detalles en [04-almacenamiento.md](04-almacenamiento.md)).
 
@@ -84,9 +84,9 @@ El componente devuelve una de tres vistas según `feedback` y `terminado`:
 
 | Vista | Condición | Líneas | Contenido |
 |---|---|---|---|
-| Feedback | `feedback !== null` | [L47-L53](../../app/src/screens/EscenarioScreen.js#L47-L53) | `PanelFeedback`; "Continuar" hace `setFeedback(null)` |
-| Fin | `terminado` | [L55-L80](../../app/src/screens/EscenarioScreen.js#L55-L80) | "Fin del escenario", `situacion` del nodo final, tarjeta con icono `flag`, `situacion` del nodo final, dos casillas con iconos `checkmark-circle` (aciertos) y `close-circle` (errores) de `contarResultados`; botones Reintentar (relleno) y Volver (`secundario`) |
-| Decisión | resto | [L82-L94](../../app/src/screens/EscenarioScreen.js#L82-L94) | "Decisión N" (`decisiones.length + 1`), `situacion` en tarjeta, y un `Grupo` "¿Qué haces?" con una `Fila` por opción. La `key` incluye `estado.nodoId` ([L90](../../app/src/screens/EscenarioScreen.js#L90)) para que React no reutilice el estado "presionado" de una fila del nodo anterior. |
+| Feedback | `feedback !== null` | [L46-L52](../../app/src/screens/EscenarioScreen.js#L46-L52) | `PanelFeedback`; "Continuar" hace `setFeedback(null)` |
+| Fin | `terminado` | [L54-L64](../../app/src/screens/EscenarioScreen.js#L54-L64) | [`ResumenEscenario`](08-resumen-desempeno.md#3-resumenescenario--vista-de-fin-hu06): desenlace, aciertos/errores/%, cada decisión tomada, temas recomendados y botones Reintentar y Volver |
+| Decisión | resto | [L66-L78](../../app/src/screens/EscenarioScreen.js#L66-L78) | "Decisión N" (`decisiones.length + 1`), `situacion` en tarjeta, y un `Grupo` "¿Qué haces?" con una `Fila` por opción. La `key` incluye `estado.nodoId` ([L74](../../app/src/screens/EscenarioScreen.js#L74)) para que React no reutilice el estado "presionado" de una fila del nodo anterior. |
 
 ```mermaid
 stateDiagram-v2
@@ -97,16 +97,17 @@ stateDiagram-v2
   Feedback --> Fin: Continuar (nodo final)
   Fin --> Decision: Reintentar
   Fin --> [*]: Volver
+  Fin --> [*]: Abrir tema recomendado
 ```
 
 ### Reintentar / Volver
 
-- **Reintentar** ([L42-L45](../../app/src/screens/EscenarioScreen.js#L42-L45)): limpia `feedback` y crea un estado nuevo con `iniciar`. No toca storage: el progreso ya se borró al terminar y se volverá a guardar con la primera decisión.
-- **Volver** ([L77](../../app/src/screens/EscenarioScreen.js#L77)): `navigation.goBack()` → `EscenariosScreen` gana foco y recarga los badges.
+- **Reintentar** ([L41-L44](../../app/src/screens/EscenarioScreen.js#L41-L44)): limpia `feedback` y crea un estado nuevo con `iniciar`. No toca storage: el progreso ya se borró al terminar y se volverá a guardar con la primera decisión.
+- **Volver** ([L60](../../app/src/screens/EscenarioScreen.js#L60)): `navigation.goBack()` → `EscenariosScreen` gana foco y recarga los badges.
 
 ### Limitación conocida
 
-Si `escenarioId` no existe en el JSON, `escenario` es `undefined` y [L19](../../app/src/screens/EscenarioScreen.js#L19) falla. Hoy no ocurre porque la navegación solo sale de la lista del mismo JSON. No tiene el fallback que sí tiene `TemaScreen`.
+Si `escenarioId` no existe en el JSON, `escenario` es `undefined` y [L18](../../app/src/screens/EscenarioScreen.js#L18) falla. Hoy no ocurre porque la navegación solo sale de la lista del mismo JSON. No tiene el fallback que sí tiene `TemaScreen`.
 
 ---
 
@@ -161,11 +162,6 @@ sequenceDiagram
 
 ---
 
-## 5. Pendiente
+## 5. Resumen y desempeño
 
-| HU | Qué falta | Dónde |
-|---|---|---|
-| HU06 — Resumen al finalizar | La vista de fin ([L55-L80](../../app/src/screens/EscenarioScreen.js#L55-L80)) muestra aciertos y errores, pero **no recomendaciones**. Reemplazarla por un resumen que recorra `estado.decisiones` y, por cada decisión incorrecta, muestre el `feedback` de la opción elegida (`escenario.nodos[d.nodoId].opciones[d.opcion]`) y enlace al tema teórico de `escenario.categoriaId`. | `EscenarioScreen` o un componente nuevo `ResumenEscenario` |
-| HU05 — Desempeño por categoría | Pantalla nueva que lea `cargarResultados()` ([storage.js:35-38](../../app/src/storage.js#L35-L38)), agrupe por `categoriaId` sumando aciertos/errores y muestre el título de la categoría desde `teoria.json`. Registrar la ruta en `App.js` y agregar un botón en `InicioScreen`. Usar `useFocusEffect` igual que `EscenariosScreen` para que se actualice al volver de un escenario. | Pantalla nueva `DesempenoScreen` |
-
-Los datos para ambas ya se guardan: cada resultado incluye `categoriaId`, `aciertos`, `errores` y `fecha` ([EscenarioScreen.js:33](../../app/src/screens/EscenarioScreen.js#L33)).
+La vista de fin y la pantalla "Mi desempeño" se documentan en [08-resumen-desempeno.md](08-resumen-desempeno.md).

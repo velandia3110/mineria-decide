@@ -10,7 +10,7 @@ Archivos involucrados:
 | [teoria.json](../../app/src/data/teoria.json) | Contenido: categorías → temas |
 | [TeoriaScreen.js](../../app/src/screens/TeoriaScreen.js) | Lista de categorías y sus temas |
 | [TemaScreen.js](../../app/src/screens/TemaScreen.js) | Detalle de un tema |
-| [App.js:34-35](../../app/App.js#L34-L35) | Registro de las rutas `Teoria` y `Tema` |
+| [App.js:35-36](../../app/App.js#L35-L36) | Registro de las rutas `Teoria` y `Tema` |
 
 Flujo: `Inicio` → fila "Contenido teórico" ([InicioScreen.js:17](../../app/src/screens/InicioScreen.js#L17)) → `Teoria` → toque en un tema → `Tema` → botón "Practicar un escenario" → `Escenarios`.
 
@@ -107,7 +107,7 @@ navigation.navigate('Tema', { categoriaId: categoria.id, temaId: tema.id, titulo
 <Stack.Screen name="Tema" component={TemaScreen} options={({ route }) => ({ title: route.params.titulo })} />
 ```
 
-([App.js:35](../../app/App.js#L35)). Así el header muestra el nombre del tema sin que `TemaScreen` tenga que llamar a `navigation.setOptions`. El mismo patrón se usa para `Escenario` ([App.js:37](../../app/App.js#L37)).
+([App.js:36](../../app/App.js#L36)). Así el header muestra el nombre del tema sin que `TemaScreen` tenga que llamar a `navigation.setOptions`. El mismo patrón se usa para `Escenario` ([App.js:38](../../app/App.js#L38)).
 
 ---
 
