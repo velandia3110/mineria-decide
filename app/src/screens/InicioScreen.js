@@ -25,6 +25,16 @@ export default function InicioScreen({ navigation }) {
           onPress={() => navigation.navigate('Escenarios')}
         />
       </Grupo>
+      <Grupo titulo="Progreso">
+        <Fila
+          key="desempeno"
+          titulo="Mi desempeño"
+          subtitulo="Resultados por categoría de riesgo"
+          icono="stats-chart-outline"
+          colorIcono={colores.correcto}
+          onPress={() => navigation.navigate('Desempeno')}
+        />
+      </Grupo>
       <View style={styles.offline}>
         <Ionicons name="cloud-offline-outline" size={16} color={colores.textoSuave} />
         <Text style={styles.offlineTexto}>Funciona sin conexión a internet</Text>

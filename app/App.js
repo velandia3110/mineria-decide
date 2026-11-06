@@ -7,6 +7,7 @@ import TeoriaScreen from './src/screens/TeoriaScreen';
 import TemaScreen from './src/screens/TemaScreen';
 import EscenariosScreen from './src/screens/EscenariosScreen';
 import EscenarioScreen from './src/screens/EscenarioScreen';
+import DesempenoScreen from './src/screens/DesempenoScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen name="Tema" component={TemaScreen} options={({ route }) => ({ title: route.params.titulo })} />
         <Stack.Screen name="Escenarios" component={EscenariosScreen} options={{ title: 'Escenarios', ...tituloGrande }} />
         <Stack.Screen name="Escenario" component={EscenarioScreen} options={({ route }) => ({ title: route.params.titulo })} />
+        <Stack.Screen name="Desempeno" component={DesempenoScreen} options={{ title: 'Mi desempeño', ...tituloGrande }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
