@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginLeft: espacio.m,
     marginBottom: espacio.s,
   },
-  caja: { backgroundColor: colores.tarjeta, borderRadius: radio.m, overflow: 'hidden' },
-  separador: { height: linea, backgroundColor: colores.separador, marginLeft: 60 },
+  caja: { backgroundColor: colores.tarjeta, borderRadius: radio.l, borderWidth: 1, borderColor: colores.separador, overflow: 'hidden' },
+  separador: { height: linea, backgroundColor: colores.separador, marginLeft: 66 },
   pie: { fontSize: fuente.pie, color: colores.textoSuave, marginHorizontal: espacio.m, marginTop: espacio.s, lineHeight: 18 },
 });

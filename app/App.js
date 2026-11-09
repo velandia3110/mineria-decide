@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { colores } from './src/theme';
 import InicioScreen from './src/screens/InicioScreen';
@@ -11,6 +11,11 @@ import DesempenoScreen from './src/screens/DesempenoScreen';
 
 const Stack = createNativeStackNavigator();
 
+const tema = {
+  ...DarkTheme,
+  colors: { ...DarkTheme.colors, primary: colores.primario, background: colores.fondo, card: colores.fondo, text: colores.texto, border: colores.separador },
+};
+
 const tituloGrande = {
   headerLargeTitle: true,
   headerLargeTitleShadowVisible: false,
@@ -19,8 +24,8 @@ const tituloGrande = {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <StatusBar style="dark" />
+    <NavigationContainer theme={tema}>
+      <StatusBar style="light" />
       <Stack.Navigator
         screenOptions={{
           headerStyle: { backgroundColor: colores.fondo },
@@ -31,7 +36,7 @@ export default function App() {
           contentStyle: { backgroundColor: colores.fondo },
         }}
       >
-        <Stack.Screen name="Inicio" component={InicioScreen} options={{ title: 'Minería: Decide', ...tituloGrande }} />
+        <Stack.Screen name="Inicio" component={InicioScreen} options={{ title: 'Inicio', headerShown: false }} />
         <Stack.Screen name="Teoria" component={TeoriaScreen} options={{ title: 'Teoría', ...tituloGrande }} />
         <Stack.Screen name="Tema" component={TemaScreen} options={({ route }) => ({ title: route.params.titulo })} />
         <Stack.Screen name="Escenarios" component={EscenariosScreen} options={{ title: 'Escenarios', ...tituloGrande }} />

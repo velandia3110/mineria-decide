@@ -10,8 +10,8 @@ export default function Fila({ titulo, subtitulo, icono, colorIcono = colores.pr
       style={({ pressed }) => [styles.fila, pressed && { backgroundColor: colores.presionado }]}
     >
       {icono && (
-        <View style={[styles.cuadro, { backgroundColor: colorIcono }]}>
-          <Ionicons name={icono} size={18} color={colores.textoClaro} />
+        <View style={styles.cuadro}>
+          <Ionicons name={icono} size={20} color={colorIcono} />
         </View>
       )}
       <View style={styles.textos}>
@@ -19,7 +19,7 @@ export default function Fila({ titulo, subtitulo, icono, colorIcono = colores.pr
         {subtitulo && <Text style={styles.subtitulo}>{subtitulo}</Text>}
       </View>
       {etiqueta && <Text style={styles.etiqueta}>{etiqueta}</Text>}
-      <Ionicons name="chevron-forward" size={18} color={colores.separador} />
+      <Ionicons name="chevron-forward" size={18} color={colores.textoSuave} />
     </Pressable>
   );
 }
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: espacio.m,
     backgroundColor: colores.tarjeta,
   },
-  cuadro: { width: 30, height: 30, borderRadius: 7, alignItems: 'center', justifyContent: 'center', marginRight: espacio.m - 2 },
+  cuadro: { width: 36, height: 36, borderRadius: 10, backgroundColor: colores.presionado, alignItems: 'center', justifyContent: 'center', marginRight: espacio.m - 2 },
   textos: { flex: 1, marginRight: espacio.s },
   titulo: { fontSize: fuente.normal, color: colores.texto },
   subtitulo: { fontSize: fuente.pie + 2, color: colores.textoSuave, marginTop: 2, lineHeight: 20 },
