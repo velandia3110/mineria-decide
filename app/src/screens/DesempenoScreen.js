@@ -20,8 +20,8 @@ function FilaCategoria({ dato, onPress }) {
       onPress={onPress}
       style={({ pressed }) => [styles.fila, pressed && { backgroundColor: colores.presionado }]}
     >
-      <View style={[styles.cuadro, { backgroundColor: categoria?.color ?? colores.primario }]}>
-        <Ionicons name={categoria?.icono ?? 'help-outline'} size={18} color={colores.textoClaro} />
+      <View style={styles.cuadro}>
+        <Ionicons name={categoria?.icono ?? 'help-outline'} size={20} color={categoria?.color ?? colores.primario} />
       </View>
       <View style={styles.textos}>
         <View style={styles.cabecera}>
@@ -41,8 +41,18 @@ function FilaCategoria({ dato, onPress }) {
           </View>
         )}
       </View>
-      <Ionicons name="chevron-forward" size={18} color={colores.separador} />
+      <Ionicons name="chevron-forward" size={18} color={colores.textoSuave} />
     </Pressable>
+  );
+}
+
+function Estadistica({ icono, valor, texto }) {
+  return (
+    <View style={styles.estadistica}>
+      <Ionicons name={icono} size={24} color={colores.primario} />
+      <Text style={styles.estadisticaTexto}>{texto}</Text>
+      <Text style={styles.estadisticaValor}>{valor}</Text>
+    </View>
   );
 }
 
@@ -71,9 +81,23 @@ export default function DesempenoScreen({ navigation }) {
   }
 
   const datos = desempenoPorCategoria(resultados);
+  const aciertos = resultados.reduce((t, r) => t + r.aciertos, 0);
+  const decisiones = resultados.reduce((t, r) => t + r.aciertos + r.errores, 0);
+  const porcentaje = decisiones ? Math.round((aciertos / decisiones) * 100) : 0;
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.contenedor}>
+      <View style={styles.resumen}>
+        <View style={styles.anillo}>
+          <Text style={styles.anilloValor}>{porcentaje}%</Text>
+        </View>
+        <Text style={styles.resumenTexto}>Decisiones seguras</Text>
+      </View>
+      <View style={styles.estadisticas}>
+        <Estadistica icono="trophy" texto="Escenarios" valor={resultados.length} />
+        <Estadistica icono="star" texto="Aciertos" valor={aciertos} />
+        <Estadistica icono="git-branch" texto="Decisiones" valor={decisiones} />
+      </View>
       <Grupo
         titulo="Por categoría de riesgo"
         pie={`Ordenado de menor a mayor desempeño. Por debajo de ${UMBRAL_REFUERZO}% se recomienda reforzar.`}
@@ -92,16 +116,41 @@ export default function DesempenoScreen({ navigation }) {
 const styles = StyleSheet.create({
   contenedor: { padding: espacio.m },
   fila: { flexDirection: 'row', alignItems: 'center', padding: espacio.m, backgroundColor: colores.tarjeta },
-  cuadro: { width: 30, height: 30, borderRadius: 7, alignItems: 'center', justifyContent: 'center', marginRight: espacio.m - 2 },
+  cuadro: { width: 36, height: 36, borderRadius: 10, backgroundColor: colores.presionado, alignItems: 'center', justifyContent: 'center', marginRight: espacio.m - 2 },
   textos: { flex: 1, marginRight: espacio.s },
   cabecera: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   titulo: { fontSize: fuente.normal, color: colores.texto, flex: 1 },
   porcentaje: { fontSize: fuente.normal, fontWeight: '700' },
-  barra: { height: 6, borderRadius: 3, backgroundColor: colores.fondo, marginVertical: espacio.s, overflow: 'hidden' },
+  barra: { height: 6, borderRadius: 3, backgroundColor: colores.presionado, marginVertical: espacio.s, overflow: 'hidden' },
   relleno: { height: 6, borderRadius: 3 },
   detalle: { fontSize: fuente.pie, color: colores.textoSuave },
   refuerzo: { flexDirection: 'row', alignItems: 'center', marginTop: espacio.xs },
   refuerzoTexto: { fontSize: fuente.pie, color: colores.acento, fontWeight: '600', marginLeft: espacio.xs },
+  resumen: { alignItems: 'center', marginVertical: espacio.m },
+  anillo: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    borderWidth: 12,
+    borderColor: colores.primario,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  anilloValor: { fontSize: fuente.grande, fontWeight: '800', color: colores.texto },
+  resumenTexto: { fontSize: fuente.normal, color: colores.textoSuave, marginTop: espacio.s },
+  estadisticas: { flexDirection: 'row', marginHorizontal: -espacio.xs, marginBottom: espacio.l },
+  estadistica: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: colores.tarjeta,
+    borderRadius: radio.m,
+    borderWidth: 1,
+    borderColor: colores.separador,
+    padding: espacio.m,
+    marginHorizontal: espacio.xs,
+  },
+  estadisticaTexto: { fontSize: fuente.pie, color: colores.textoSuave, marginTop: espacio.xs },
+  estadisticaValor: { fontSize: fuente.titulo, fontWeight: '700', color: colores.primario },
   total: { fontSize: fuente.pie, color: colores.textoSuave, textAlign: 'center' },
   vacio: { backgroundColor: colores.tarjeta, borderRadius: radio.l, padding: espacio.l, alignItems: 'center', marginBottom: espacio.m },
   vacioTitulo: { fontSize: fuente.titulo, fontWeight: '700', color: colores.texto, marginTop: espacio.s },

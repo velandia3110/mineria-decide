@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Fila from '../components/Fila';
-import Grupo from '../components/Grupo';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import PanelFeedback from '../components/PanelFeedback';
+import Portada from '../components/Portada';
 import ResumenEscenario from '../components/ResumenEscenario';
 import escenarios from '../data/escenarios.json';
 import { contarResultados, elegir, esFinal, iniciar, nodoActual } from '../logic/motor';
 import { borrarProgreso, cargarProgreso, guardarProgreso, guardarResultado } from '../storage';
 import { colores, espacio, fuente, radio } from '../theme';
+
+const LETRAS = 'ABCDEFGH';
 
 export default function EscenarioScreen({ route, navigation }) {
   const escenario = escenarios.find((e) => e.id === route.params.escenarioId);
@@ -63,17 +65,37 @@ export default function EscenarioScreen({ route, navigation }) {
     );
   }
 
+  const { aciertos } = contarResultados(estado);
+
   return (
     <ScrollView contentContainerStyle={styles.contenedor}>
-      <Text style={styles.etiqueta}>Decisión {estado.decisiones.length + 1}</Text>
-      <View style={styles.situacion}>
-        <Text style={styles.situacionTexto}>{nodo.situacion}</Text>
+      <View style={styles.barra}>
+        <Text style={styles.etiqueta}>Decisión {estado.decisiones.length + 1}</Text>
+        <View style={styles.aciertos}>
+          <Ionicons name="star" size={18} color={colores.primario} />
+          <Text style={styles.aciertosTexto}>{aciertos}</Text>
+        </View>
       </View>
-      <Grupo titulo="¿Qué haces?">
-        {nodo.opciones.map((op, i) => (
-          <Fila key={`${estado.nodoId}-${i}`} titulo={op.texto} onPress={() => onElegir(i)} />
-        ))}
-      </Grupo>
+      <View style={styles.situacion}>
+        <Portada icono="warning" alto={150} tamano={64} style={styles.imagen} />
+        <Text style={styles.situacionTexto}>{nodo.situacion}</Text>
+        <Text style={styles.pregunta}>¿Qué debes hacer?</Text>
+      </View>
+      {nodo.opciones.map((op, i) => (
+        <Pressable
+          key={`${estado.nodoId}-${i}`}
+          accessibilityRole="button"
+          onPress={() => onElegir(i)}
+          style={({ pressed }) => [styles.opcion, pressed && styles.opcionPresionada]}
+        >
+          {({ pressed }) => (
+            <>
+              <Text style={[styles.letra, pressed && { color: colores.sobrePrimario }]}>{LETRAS[i]}.</Text>
+              <Text style={[styles.opcionTexto, pressed && { color: colores.sobrePrimario }]}>{op.texto}</Text>
+            </>
+          )}
+        </Pressable>
+      ))}
     </ScrollView>
   );
 }
@@ -81,7 +103,34 @@ export default function EscenarioScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   cargando: { flex: 1 },
   contenedor: { padding: espacio.m, paddingBottom: espacio.xl },
-  etiqueta: { fontSize: fuente.pie, fontWeight: '600', color: colores.primario, textTransform: 'uppercase', marginLeft: espacio.m, marginBottom: espacio.s },
-  situacion: { backgroundColor: colores.tarjeta, borderRadius: radio.m, padding: espacio.m, marginBottom: espacio.l },
-  situacionTexto: { fontSize: fuente.normal + 2, color: colores.texto, lineHeight: 28 },
+  barra: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: espacio.s },
+  etiqueta: { fontSize: fuente.pie, fontWeight: '700', color: colores.primario, textTransform: 'uppercase' },
+  aciertos: { flexDirection: 'row', alignItems: 'center' },
+  aciertosTexto: { fontSize: fuente.normal, fontWeight: '700', color: colores.primario, marginLeft: espacio.xs },
+  situacion: {
+    backgroundColor: colores.tarjeta,
+    borderRadius: radio.l,
+    borderWidth: 1,
+    borderColor: colores.separador,
+    overflow: 'hidden',
+    marginBottom: espacio.m,
+  },
+  imagen: { borderRadius: 0 },
+  situacionTexto: { fontSize: fuente.normal + 1, color: colores.texto, lineHeight: 26, padding: espacio.m, paddingBottom: espacio.s, textAlign: 'center' },
+  pregunta: { fontSize: fuente.normal + 1, fontWeight: '700', color: colores.texto, textAlign: 'center', paddingBottom: espacio.m },
+  opcion: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    minHeight: 52,
+    borderRadius: radio.m,
+    borderWidth: 1,
+    borderColor: colores.borde,
+    backgroundColor: colores.tarjeta,
+    paddingVertical: espacio.m - 2,
+    paddingHorizontal: espacio.m,
+    marginBottom: espacio.s,
+  },
+  opcionPresionada: { backgroundColor: colores.primario, borderColor: colores.primario },
+  letra: { fontSize: fuente.normal, fontWeight: '800', color: colores.primario, width: 26 },
+  opcionTexto: { flex: 1, fontSize: fuente.normal - 1, color: colores.texto, lineHeight: 22 },
 });
