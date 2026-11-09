@@ -38,7 +38,7 @@ export default function InicioScreen({ navigation }) {
         <Mosaico titulo="Mi desempeño" icono="stats-chart" ancho onPress={() => navigation.navigate('Desempeno')} />
       </View>
 
-      <Portada alto={170}>
+      <Portada imagen="inicio" alto={170}>
         <View style={styles.pie}>
           <Ionicons name="cloud-offline-outline" size={16} color={colores.texto} />
           <Text style={styles.pieTexto}>Aprende · Decide · Trabaja seguro — sin conexión</Text>

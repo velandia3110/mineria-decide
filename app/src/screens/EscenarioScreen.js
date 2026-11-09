@@ -77,7 +77,7 @@ export default function EscenarioScreen({ route, navigation }) {
         </View>
       </View>
       <View style={styles.situacion}>
-        <Portada icono="warning" alto={150} tamano={64} style={styles.imagen} />
+        <Portada imagen={nodo.tema} icono="warning" alto={170} style={styles.imagen} />
         <Text style={styles.situacionTexto}>{nodo.situacion}</Text>
         <Text style={styles.pregunta}>¿Qué debes hacer?</Text>
       </View>

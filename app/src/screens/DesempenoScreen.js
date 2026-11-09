@@ -4,6 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import Grupo from '../components/Grupo';
 import BotonGrande from '../components/BotonGrande';
+import Portada from '../components/Portada';
 import teoria from '../data/teoria.json';
 import { desempenoPorCategoria, UMBRAL_REFUERZO } from '../logic/resumen';
 import { cargarResultados } from '../storage';
@@ -70,8 +71,9 @@ export default function DesempenoScreen({ navigation }) {
   if (resultados.length === 0) {
     return (
       <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.contenedor}>
+        <Portada imagen="desempeno" alto={170} style={styles.vacioPortada} />
         <View style={styles.vacio}>
-          <Ionicons name="stats-chart-outline" size={48} color={colores.textoSuave} />
+          <Ionicons name="stats-chart-outline" size={40} color={colores.primario} />
           <Text style={styles.vacioTitulo}>Aún no hay resultados</Text>
           <Text style={styles.vacioTexto}>Completa un escenario para ver tu desempeño por categoría de riesgo.</Text>
         </View>
@@ -87,12 +89,12 @@ export default function DesempenoScreen({ navigation }) {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.contenedor}>
-      <View style={styles.resumen}>
+      <Portada imagen="desempeno" alto={220} style={styles.resumen}>
         <View style={styles.anillo}>
           <Text style={styles.anilloValor}>{porcentaje}%</Text>
+          <Text style={styles.resumenTexto}>seguras</Text>
         </View>
-        <Text style={styles.resumenTexto}>Decisiones seguras</Text>
-      </View>
+      </Portada>
       <View style={styles.estadisticas}>
         <Estadistica icono="trophy" texto="Escenarios" valor={resultados.length} />
         <Estadistica icono="star" texto="Aciertos" valor={aciertos} />
@@ -126,18 +128,20 @@ const styles = StyleSheet.create({
   detalle: { fontSize: fuente.pie, color: colores.textoSuave },
   refuerzo: { flexDirection: 'row', alignItems: 'center', marginTop: espacio.xs },
   refuerzoTexto: { fontSize: fuente.pie, color: colores.acento, fontWeight: '600', marginLeft: espacio.xs },
-  resumen: { alignItems: 'center', marginVertical: espacio.m },
+  resumen: { alignItems: 'center', justifyContent: 'center', marginBottom: espacio.m },
+  vacioPortada: { marginBottom: espacio.m },
   anillo: {
     width: 150,
     height: 150,
     borderRadius: 75,
     borderWidth: 12,
     borderColor: colores.primario,
+    backgroundColor: 'rgba(0,0,0,0.6)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   anilloValor: { fontSize: fuente.grande, fontWeight: '800', color: colores.texto },
-  resumenTexto: { fontSize: fuente.normal, color: colores.textoSuave, marginTop: espacio.s },
+  resumenTexto: { fontSize: fuente.pie, color: colores.texto, textTransform: 'uppercase' },
   estadisticas: { flexDirection: 'row', marginHorizontal: -espacio.xs, marginBottom: espacio.l },
   estadistica: {
     flex: 1,

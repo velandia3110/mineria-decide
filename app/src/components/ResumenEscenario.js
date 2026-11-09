@@ -3,13 +3,14 @@ import { Ionicons } from '@expo/vector-icons';
 import BotonGrande from './BotonGrande';
 import Fila from './Fila';
 import Grupo from './Grupo';
+import Portada from './Portada';
 import teoria from '../data/teoria.json';
 import { resumir } from '../logic/resumen';
 import { colores, espacio, fuente, radio } from '../theme';
 
 function Dato({ icono, color, valor, texto }) {
   return (
-    <View style={styles.dato}>
+    <View style={[styles.dato, { borderTopColor: color }]}>
       <Ionicons name={icono} size={24} color={color} />
       <Text style={styles.numero}>{valor}</Text>
       <Text style={styles.datoTexto}>{texto}</Text>
@@ -25,9 +26,15 @@ export default function ResumenEscenario({ escenario, estado, onReintentar, onVo
 
   return (
     <ScrollView contentContainerStyle={styles.contenedor}>
+      <Portada
+        imagen="fin"
+        alto={180}
+        icono="flag"
+        subtitulo={resumen.porcentaje >= 70 ? 'Saliste seguro' : 'Hay que reforzar'}
+        colorIcono={resumen.porcentaje >= 70 ? colores.correcto : colores.acento}
+        titulo="Fin del escenario"
+      />
       <View style={styles.fin}>
-        <Ionicons name="flag" size={40} color={colores.primario} />
-        <Text style={styles.finTitulo}>Fin del escenario</Text>
         <Text style={styles.finTexto}>{final.situacion}</Text>
       </View>
 
@@ -75,11 +82,10 @@ export default function ResumenEscenario({ escenario, estado, onReintentar, onVo
 
 const styles = StyleSheet.create({
   contenedor: { padding: espacio.m, paddingBottom: espacio.xl },
-  fin: { backgroundColor: colores.tarjeta, borderRadius: radio.l, padding: espacio.l, alignItems: 'center', marginBottom: espacio.m },
-  finTitulo: { fontSize: fuente.titulo, fontWeight: '700', color: colores.texto, marginTop: espacio.s, marginBottom: espacio.s },
+  fin: { backgroundColor: colores.tarjeta, borderRadius: radio.l, borderWidth: 1, borderColor: colores.separador, padding: espacio.m, marginVertical: espacio.m },
   finTexto: { fontSize: fuente.normal, color: colores.texto, lineHeight: 25, textAlign: 'center' },
   conteo: { flexDirection: 'row', marginBottom: espacio.l, marginHorizontal: -espacio.xs },
-  dato: { flex: 1, backgroundColor: colores.tarjeta, borderRadius: radio.m, padding: espacio.m, alignItems: 'center', marginHorizontal: espacio.xs },
+  dato: { flex: 1, backgroundColor: colores.tarjeta, borderRadius: radio.m, borderWidth: 1, borderColor: colores.separador, borderTopWidth: 3, padding: espacio.m, alignItems: 'center', marginHorizontal: espacio.xs },
   numero: { fontSize: fuente.titulo + 6, fontWeight: '700', color: colores.texto, marginTop: espacio.xs },
   datoTexto: { fontSize: fuente.pie, color: colores.textoSuave },
   decision: { flexDirection: 'row', alignItems: 'flex-start', paddingVertical: espacio.m - 4, paddingHorizontal: espacio.m },

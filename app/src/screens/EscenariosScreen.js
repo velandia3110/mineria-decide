@@ -32,7 +32,7 @@ export default function EscenariosScreen({ navigation }) {
             onPress={() => navigation.navigate('Escenario', { escenarioId: e.id, titulo: e.titulo })}
             style={({ pressed }) => [styles.tarjeta, pressed && { backgroundColor: colores.presionado }]}
           >
-            <Portada icono={categoria?.icono} color={categoria?.color} alto={92} tamano={36} style={styles.miniatura} />
+            <Portada imagen={e.id} icono={categoria?.icono} colorIcono={categoria?.color} alto={92} style={styles.miniatura} />
             <View style={styles.textos}>
               <Text style={styles.titulo}>{e.titulo}</Text>
               <Text style={[styles.categoria, { color: categoria?.color ?? colores.primario }]}>{categoria?.titulo}</Text>
