@@ -112,5 +112,46 @@
         ]
       }
     ]
+  },
+  {
+    "id": "emergencias",
+    "titulo": "Emergencias",
+    "icono": "medkit-outline",
+    "color": "#FF6B6B",
+    "descripcion": "Primeros auxilios y qué hacer ante un derrumbe.",
+    "temas": [
+      {
+        "id": "primeros-auxilios",
+        "titulo": "Primeros auxilios",
+        "icono": "bandage-outline",
+        "parrafos": [
+          "Ante un accidente sigue tres pasos: Proteger, Avisar y Socorrer. Primero asegura el lugar para que no haya más víctimas, luego avisa por radio pidiendo rescate y botiquín, y después ayuda al herido.",
+          "Si hay sangrado fuerte, presiona la herida con un paño limpio y no lo retires. Si el herido se queja del cuello o la espalda, o tiene una fractura, no lo muevas salvo peligro inmediato: inmoviliza la zona como está y espera la camilla.",
+          "Palidez, sudor frío, sueño y sed son señales de shock. Mantén al herido acostado y abrigado, háblale para vigilar que siga consciente y no le des agua ni comida."
+        ],
+        "puntosClave": [
+          "Proteger, Avisar, Socorrer.",
+          "Sangrado: presión directa con un paño limpio.",
+          "Posible lesión de columna o fractura: no mover, inmovilizar.",
+          "Shock: acostado, abrigado y nada por la boca."
+        ]
+      },
+      {
+        "id": "derrumbes",
+        "titulo": "Derrumbes",
+        "icono": "warning-outline",
+        "parrafos": [
+          "Crujidos en el techo, caída de polvo o de pequeños trozos y grietas nuevas son señales de que la roca puede caer. Al notarlas, deja de trabajar, retírate a una zona sostenida y avisa.",
+          "Después de un derrumbe aléjate de la zona de caída, avisa por radio dónde fue y cuántas personas faltan, y haz el conteo del personal. No remuevas escombros ni te acerques a mirar: puede caer más roca.",
+          "Si escuchas golpes o voces de personas atrapadas, responde con golpes e informa a la brigada. Solo la brigada de rescate abre paso, apuntalando el sector antes de remover material."
+        ],
+        "puntosClave": [
+          "Crujidos, polvo o trozos que caen: retírate y avisa.",
+          "Tras el derrumbe: alejarse, avisar y contar al personal.",
+          "No remuevas escombros sin la brigada.",
+          "Responde a las señales de los atrapados e informa."
+        ]
+      }
+    ]
   }
 ]

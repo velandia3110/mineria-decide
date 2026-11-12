@@ -9,6 +9,7 @@
       "n1": {
         "situacion": "Terminó la voladura en la galería 3. Te piden entrar a revisar el frente. Notas que el ventilador auxiliar está apagado y todavía hay algo de humo.",
         "tema": "ventilacion-socavon",
+        "imagen": "gas-n1",
         "opciones": [
           {
             "texto": "Pido encender el ventilador, espero y mido el aire con el detector multigás antes de entrar",
@@ -33,6 +34,7 @@
       "n2": {
         "situacion": "El ventilador ya funciona. En la entrada de la galería, el detector multigás suena: marca CO alto y oxígeno bajo.",
         "tema": "detector-multigas",
+        "imagen": "gas-n2",
         "opciones": [
           {
             "texto": "No entro. Aviso al supervisor y espero a que la ventilación limpie el aire",
@@ -51,6 +53,7 @@
       "n3": {
         "situacion": "Una nueva medición sale bien y entras con tu compañero. Más adelante encuentras a un trabajador de otro turno caído en el piso. Tu detector vuelve a sonar.",
         "tema": "gases-peligrosos",
+        "imagen": "gas-n3",
         "opciones": [
           {
             "texto": "Retrocedo a aire fresco con mi compañero, aviso por radio y pido rescate con equipo de respiración",
@@ -75,6 +78,7 @@
       "n2b": {
         "situacion": "Ya estás dentro de la galería. El detector empieza a sonar y sientes un leve dolor de cabeza.",
         "tema": "detector-multigas",
+        "imagen": "gas-n2",
         "opciones": [
           {
             "texto": "Salgo de inmediato por donde entré hacia aire fresco y aviso",
@@ -93,6 +97,7 @@
       "n2c": {
         "situacion": "Con el trapo en la cara avanzas unos metros. Te mareas y te cuesta pensar con claridad.",
         "tema": "gases-peligrosos",
+        "imagen": "gas-n1",
         "opciones": [
           {
             "texto": "Me pongo el autorrescatador y salgo hacia aire fresco",
@@ -111,6 +116,7 @@
       "n3b": {
         "situacion": "Llegaste a aire fresco. Todavía te duele la cabeza y te sientes débil.",
         "tema": "gases-peligrosos",
+        "imagen": "apoyo-5",
         "opciones": [
           {
             "texto": "Informo al supervisor lo que pasó y pido atención médica",
@@ -154,6 +160,7 @@
       "n1": {
         "situacion": "Se cargaron 12 taladros en el frente. Desde el refugio cuentas las detonaciones y solo escuchas 10.",
         "tema": "tiros-fallados",
+        "imagen": "tiro-n1",
         "opciones": [
           {
             "texto": "Aviso al supervisor, espero el tiempo establecido y la ventilación antes de acercarme",
@@ -178,6 +185,7 @@
       "n2": {
         "situacion": "Pasado el tiempo y con el frente ventilado, inspeccionas junto al supervisor. Encuentras un taladro con la guía intacta: es un tiro fallado.",
         "tema": "tiros-fallados",
+        "imagen": "tiro-n2",
         "opciones": [
           {
             "texto": "Señalizo y aíslo la zona, y reporto para que lo trate el personal autorizado",
@@ -202,6 +210,7 @@
       "n2b": {
         "situacion": "Entras antes de tiempo. El humo aún es denso y ves un taladro con explosivo que no detonó.",
         "tema": "tiros-fallados",
+        "imagen": "tiro-n1",
         "opciones": [
           {
             "texto": "Salgo de inmediato, aviso al supervisor y espero el tiempo y la ventilación",
@@ -220,6 +229,7 @@
       "n2c": {
         "situacion": "Mientras desatas rocas con la barretilla, ves restos de explosivo sin detonar entre el material.",
         "tema": "tiros-fallados",
+        "imagen": "tiro-n2",
         "opciones": [
           {
             "texto": "Detengo el trabajo, me alejo, señalizo y reporto",
@@ -238,6 +248,7 @@
       "n3": {
         "situacion": "Mientras llega el personal autorizado, el jefe de turno te pide traer más explosivos y detonadores del polvorín. Te ofrece una sola caja para llevar todo.",
         "tema": "almacenamiento",
+        "imagen": "tiro-n3",
         "opciones": [
           {
             "texto": "Llevo explosivos y detonadores por separado, cada uno en su recipiente",
@@ -256,6 +267,7 @@
       "n3b": {
         "situacion": "Al pasar por una zona estrecha, la caja con explosivos y detonadores se golpea contra la roca.",
         "tema": "manipulacion",
+        "imagen": "tiro-n3",
         "opciones": [
           {
             "texto": "Me detengo, la dejo con cuidado, separo detonadores y explosivos y reporto",
@@ -281,6 +293,174 @@
       },
       "finAprendizaje": {
         "situacion": "No hubo detonación. El supervisor revisa el material, se reporta el incidente y se refuerza el procedimiento de transporte. Saliste bien, pero el riesgo se pudo evitar.",
+        "final": true
+      }
+    }
+  },
+  {
+    "id": "primeros-auxilios-galeria",
+    "titulo": "Primeros auxilios en la galería",
+    "categoriaId": "emergencias",
+    "descripcion": "Un compañero quedó atrapado por una vagoneta y está herido. ¿Cómo lo ayudas?",
+    "inicio": "n1",
+    "nodos": {
+      "n1": {
+        "situacion": "Escuchas un grito en la galería 3. Una vagoneta se soltó y aprisionó la pierna de un compañero. Sangra bastante y está asustado. El equipo todavía se mueve un poco.",
+        "tema": "primeros-auxilios",
+        "imagen": "pa-n1",
+        "opciones": [
+          {
+            "texto": "Verifico que el equipo y el lugar estén seguros, aviso por radio pidiendo rescate y botiquín, y me acerco",
+            "correcta": true,
+            "feedback": "Correcto. Primero te proteges tú: si la vagoneta se sigue moviendo puede atraparte también. Avisar trae el rescate y el botiquín. Ya junto a él, presionas la herida con un paño limpio para controlar el sangrado.",
+            "siguiente": "n2"
+          },
+          {
+            "texto": "Corro a jalarlo de la pierna para sacarlo rápido",
+            "correcta": false,
+            "feedback": "Incorrecto. Jalar una pierna atrapada puede romper más el hueso, aumentar el sangrado y lesionar la columna. Y si el equipo se mueve, puede atraparte a ti. Se asegura el lugar, se avisa y se presiona la herida.",
+            "siguiente": "n2"
+          },
+          {
+            "texto": "Subo yo solo a la superficie a buscar ayuda y lo dejo ahí",
+            "correcta": false,
+            "feedback": "Incorrecto. Dejarlo solo pierde minutos clave para controlar el sangrado. Usa la radio para avisar y quédate a ayudarlo presionando la herida.",
+            "siguiente": "n2"
+          }
+        ]
+      },
+      "n2": {
+        "situacion": "La presión funciona y el sangrado disminuye. El rescate aún no llega. La pierna se ve doblada y tu compañero dice que también le duele la espalda por el golpe.",
+        "tema": "primeros-auxilios",
+        "imagen": "pa-n2",
+        "opciones": [
+          {
+            "texto": "Lo dejo quieto, inmovilizo la pierna como está y espero al rescate con camilla",
+            "correcta": true,
+            "feedback": "Correcto. Si duele la espalda puede haber lesión de columna: no se mueve al herido salvo peligro inmediato. La fractura se inmoviliza en la posición encontrada, sin enderezarla.",
+            "siguiente": "n3"
+          },
+          {
+            "texto": "Entre dos compañeros lo levantamos y lo cargamos hacia la superficie",
+            "correcta": false,
+            "feedback": "Incorrecto. Cargar a alguien con posible lesión de columna puede dejarlo paralizado. Solo se mueve al herido si el lugar es peligroso; si no, se espera la camilla del rescate.",
+            "siguiente": "finLesionado"
+          }
+        ]
+      },
+      "n3": {
+        "situacion": "Mientras esperan, tu compañero se pone pálido, suda frío y se muestra somnoliento. Dice que tiene sed.",
+        "tema": "primeros-auxilios",
+        "imagen": "pa-n3",
+        "opciones": [
+          {
+            "texto": "Lo mantengo acostado y abrigado, le hablo para vigilar que siga consciente y no le doy nada de beber",
+            "correcta": true,
+            "feedback": "Correcto. Palidez, sudor frío, sueño y sed son señales de shock por la pérdida de sangre. Se mantiene acostado y abrigado, se vigila que siga consciente y no se le da agua ni comida: puede vomitar y ahogarse, o necesitar cirugía.",
+            "siguiente": "finExito"
+          },
+          {
+            "texto": "Le doy agua y algo de comer para que recupere fuerzas",
+            "correcta": false,
+            "feedback": "Incorrecto. En shock no se da nada por la boca. Puede vomitar y ahogarse, y complica la atención médica si debe ser operado. Mantenlo acostado, abrigado y vigílalo.",
+            "siguiente": "finComplicado"
+          }
+        ]
+      },
+      "finExito": {
+        "situacion": "El rescate llega con camilla y botiquín y lo saca estable. Asegurar el lugar, controlar el sangrado, no moverlo y vigilarlo le dieron tiempo hasta la atención médica.",
+        "final": true
+      },
+      "finLesionado": {
+        "situacion": "Al levantarlo, tu compañero grita de dolor y deja de sentir las piernas. Moverlo empeoró la lesión de columna. El rescate debe llevarlo de urgencia.",
+        "final": true
+      },
+      "finComplicado": {
+        "situacion": "Tu compañero vomita y casi se ahoga. El rescate llega a tiempo y lo estabiliza, pero la atención se complicó. En shock, nada por la boca.",
+        "final": true
+      }
+    }
+  },
+  {
+    "id": "derrumbe-galeria",
+    "titulo": "Derrumbe en la galería",
+    "categoriaId": "emergencias",
+    "descripcion": "Parte de la galería se derrumbó y dos compañeros no responden. ¿Qué haces?",
+    "inicio": "n1",
+    "nodos": {
+      "n1": {
+        "situacion": "Escuchas un estruendo: parte de la galería 3 se derrumbó unos metros adelante y el polvo lo cubre todo. Tú estás bien, pero dos compañeros no responden por radio.",
+        "tema": "derrumbes",
+        "imagen": "derrumbe-n1",
+        "opciones": [
+          {
+            "texto": "Me alejo de la zona de caída, aviso por radio dónde fue y cuántos faltan, y hago el conteo del personal",
+            "correcta": true,
+            "feedback": "Correcto. Tras un derrumbe puede caer más roca. Alejarte y avisar el lugar exacto y cuántas personas faltan permite que la brigada actúe rápido y segura.",
+            "siguiente": "n2"
+          },
+          {
+            "texto": "Corro a remover escombros con las manos para sacar a mis compañeros",
+            "correcta": false,
+            "feedback": "Incorrecto. El techo recién caído está inestable. Remover escombros sin la brigada puede provocar otra caída y sumar una víctima más.",
+            "siguiente": "n3"
+          },
+          {
+            "texto": "Me acerco a mirar cuánto cayó para ver qué se puede hacer",
+            "correcta": false,
+            "feedback": "Incorrecto. La zona del derrumbe es la más peligrosa: puede seguir cayendo roca. Evaluar el derrumbe es tarea de la brigada, con sostenimiento.",
+            "siguiente": "finAtrapado"
+          }
+        ]
+      },
+      "n2": {
+        "situacion": "Estás en una zona segura y ya avisaste. La brigada viene en camino. Desde el otro lado de los escombros escuchas golpes rítmicos: alguien está vivo.",
+        "tema": "derrumbes",
+        "imagen": "derrumbe-n2",
+        "opciones": [
+          {
+            "texto": "Respondo con golpes, aviso a la brigada de las señales que oigo y espero sin tocar los escombros",
+            "correcta": true,
+            "feedback": "Correcto. Responder les dice a los atrapados que alguien los escuchó, y esa información ayuda a la brigada a ubicarlos. Tocar los escombros puede hacer caer más roca sobre ellos.",
+            "siguiente": "finExito"
+          },
+          {
+            "texto": "Empiezo a quitar rocas de arriba para abrir un hueco",
+            "correcta": false,
+            "feedback": "Incorrecto. Quitar rocas sin sostenimiento puede soltar el techo sobre ti y sobre los atrapados. La brigada abre paso con técnica y apuntalando.",
+            "siguiente": "n3"
+          }
+        ]
+      },
+      "n3": {
+        "situacion": "Mientras sacas rocas, el techo cruje encima de ti y empiezan a caer polvo y pequeños trozos.",
+        "tema": "derrumbes",
+        "imagen": "derrumbe-n3",
+        "opciones": [
+          {
+            "texto": "Dejo de remover, me retiro a zona sostenida y aviso a la brigada",
+            "correcta": true,
+            "feedback": "Correcto. Crujidos, polvo y trozos que caen avisan que el techo va a ceder. Retirarte a tiempo a una zona sostenida te salva y evita que la brigada tenga que rescatar a uno más.",
+            "siguiente": "finAprendizaje"
+          },
+          {
+            "texto": "Sigo removiendo, ya casi abro paso",
+            "correcta": false,
+            "feedback": "Incorrecto. Esas señales indican una caída inminente. Seguir ahí te deja bajo el techo inestable justo cuando cede.",
+            "siguiente": "finAtrapado"
+          }
+        ]
+      },
+      "finExito": {
+        "situacion": "La brigada llega, apuntala el sector y abre paso con seguridad. Rescatan a tus dos compañeros con vida. Alejarte, avisar y esperar hizo posible el rescate.",
+        "final": true
+      },
+      "finAprendizaje": {
+        "situacion": "Segundos después cae otra parte del techo donde estabas. La brigada rescata a tus compañeros. Saliste bien, pero el riesgo se pudo evitar desde el inicio.",
+        "final": true
+      },
+      "finAtrapado": {
+        "situacion": "Cae otra parte del techo y quedas atrapado. Ahora la brigada debe rescatar a una persona más. Tras un derrumbe, nadie entra a la zona sin sostenimiento.",
         "final": true
       }
     }
