@@ -10,6 +10,18 @@ import { colores, espacio, fuente, radio } from '../theme';
 
 const categorias = Object.fromEntries(teoria.map((c) => [c.id, c]));
 
+function Punto({ icono, titulo, texto }) {
+  return (
+    <View style={styles.punto}>
+      <Ionicons name={icono} size={22} color={colores.primario} style={styles.puntoIcono} />
+      <View style={styles.textos}>
+        <Text style={styles.puntoTitulo}>{titulo}</Text>
+        <Text style={styles.puntoTexto}>{texto}</Text>
+      </View>
+    </View>
+  );
+}
+
 export default function EscenariosScreen({ navigation }) {
   const [enProgreso, setEnProgreso] = useState({});
 
@@ -23,6 +35,19 @@ export default function EscenariosScreen({ navigation }) {
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.contenedor}>
+      <View style={styles.intro}>
+        <Portada imagen="escenarios" alto={130} style={styles.introPortada} subtitulo="Aprende practicando" titulo="Escenarios interactivos" />
+        <Punto
+          icono="help-circle-outline"
+          titulo="¿Qué son?"
+          texto="Situaciones reales de la mina contadas paso a paso. En cada paso eliges qué hacer y la historia cambia según tu decisión."
+        />
+        <Punto
+          icono="shield-checkmark-outline"
+          titulo="¿En qué te ayudan?"
+          texto="Practicas sin riesgo cómo actuar ante una emergencia. Cada respuesta te explica por qué es segura o peligrosa y al final te dice qué temas repasar."
+        />
+      </View>
       {escenarios.map((e) => {
         const categoria = categorias[e.categoriaId];
         return (
@@ -49,6 +74,20 @@ export default function EscenariosScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   contenedor: { padding: espacio.m },
+  intro: {
+    backgroundColor: colores.tarjeta,
+    borderRadius: radio.l,
+    borderWidth: 1,
+    borderColor: colores.separador,
+    overflow: 'hidden',
+    paddingBottom: espacio.s,
+    marginBottom: espacio.m,
+  },
+  introPortada: { borderRadius: 0, marginBottom: espacio.s },
+  punto: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: espacio.m, paddingVertical: espacio.s },
+  puntoIcono: { marginTop: 1 },
+  puntoTitulo: { fontSize: fuente.normal - 1, fontWeight: '700', color: colores.texto },
+  puntoTexto: { fontSize: fuente.pie + 2, color: colores.textoSuave, lineHeight: 21, marginTop: 2 },
   tarjeta: {
     flexDirection: 'row',
     alignItems: 'center',

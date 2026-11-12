@@ -27,6 +27,20 @@ export function contarResultados(estado) {
   return { aciertos, errores: estado.decisiones.length - aciertos };
 }
 
+// Máximo de decisiones que faltan desde un nodo hasta un final (ruta más larga).
+export function pasosRestantes(escenario, nodoId, vistos = new Set()) {
+  const nodo = escenario.nodos[nodoId];
+  if (!nodo || nodo.final || vistos.has(nodoId)) return 0;
+  const siguientes = new Set(vistos).add(nodoId);
+  return 1 + Math.max(...nodo.opciones.map((op) => pasosRestantes(escenario, op.siguiente, siguientes)));
+}
+
+// Avance de la partida: decisiones tomadas y total estimado según la rama actual.
+export function avance(escenario, estado) {
+  const hechas = estado.decisiones.length;
+  return { hechas, total: hechas + pasosRestantes(escenario, estado.nodoId) };
+}
+
 export function validarEscenario(escenario) {
   const errores = [];
   const nodos = escenario.nodos;

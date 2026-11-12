@@ -50,3 +50,16 @@ test('validarEscenario detecta errores y acepta los escenarios reales', () => {
   assert.equal(validarEscenario(roto).length, 3);
   for (const esc of escenarios) assert.deepEqual(validarEscenario(esc), []);
 });
+
+test('todos los escenarios son válidos y el avance cuenta la ruta más larga', async () => {
+  const { pasosRestantes, avance } = await import('./motor.js');
+  for (const esc of escenarios) assert.deepEqual(validarEscenario(esc), [], esc.id);
+  assert.equal(pasosRestantes(mini, 'a'), 1);
+  assert.equal(pasosRestantes(mini, 'b'), 0);
+  const derrumbe = escenarios.find((e) => e.id === 'derrumbe-galeria');
+  assert.deepEqual(avance(derrumbe, iniciar(derrumbe)), { hechas: 0, total: 3 });
+  const n2 = elegir(derrumbe, iniciar(derrumbe), 0).estado; // desde n2 la ruta más larga pasa por n3
+  assert.deepEqual(avance(derrumbe, n2), { hechas: 1, total: 3 });
+  const fin = elegir(derrumbe, n2, 0).estado; // correcta en n2 termina antes
+  assert.deepEqual(avance(derrumbe, fin), { hechas: 2, total: 2 });
+});

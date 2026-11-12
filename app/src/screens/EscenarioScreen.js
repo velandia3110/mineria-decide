@@ -5,11 +5,30 @@ import PanelFeedback from '../components/PanelFeedback';
 import Portada from '../components/Portada';
 import ResumenEscenario from '../components/ResumenEscenario';
 import escenarios from '../data/escenarios.json';
-import { contarResultados, elegir, esFinal, iniciar, nodoActual } from '../logic/motor';
+import { avance, contarResultados, elegir, esFinal, iniciar, nodoActual } from '../logic/motor';
 import { borrarProgreso, cargarProgreso, guardarProgreso, guardarResultado } from '../storage';
 import { colores, espacio, fuente, radio } from '../theme';
 
 const LETRAS = 'ABCDEFGH';
+
+function BarraAvance({ paso, total, aciertos }) {
+  return (
+    <View style={styles.avance}>
+      <View style={styles.barra}>
+        <Text style={styles.etiqueta}>
+          Decisión {paso} de {total}
+        </Text>
+        <View style={styles.aciertos}>
+          <Ionicons name="star" size={18} color={colores.primario} />
+          <Text style={styles.aciertosTexto}>{aciertos}</Text>
+        </View>
+      </View>
+      <View style={styles.pista} accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: total, now: paso }}>
+        <View style={[styles.relleno, { width: `${(paso / total) * 100}%` }]} />
+      </View>
+    </View>
+  );
+}
 
 export default function EscenarioScreen({ route, navigation }) {
   const escenario = escenarios.find((e) => e.id === route.params.escenarioId);
@@ -45,9 +64,13 @@ export default function EscenarioScreen({ route, navigation }) {
     setEstado(iniciar(escenario));
   }
 
+  const { hechas, total } = avance(escenario, estado);
+  const { aciertos } = contarResultados(estado);
+
   if (feedback) {
     return (
       <ScrollView contentContainerStyle={styles.contenedor}>
+        <BarraAvance paso={hechas} total={total} aciertos={aciertos} />
         <PanelFeedback opcion={feedback} onContinuar={() => setFeedback(null)} />
       </ScrollView>
     );
@@ -65,19 +88,11 @@ export default function EscenarioScreen({ route, navigation }) {
     );
   }
 
-  const { aciertos } = contarResultados(estado);
-
   return (
     <ScrollView contentContainerStyle={styles.contenedor}>
-      <View style={styles.barra}>
-        <Text style={styles.etiqueta}>Decisión {estado.decisiones.length + 1}</Text>
-        <View style={styles.aciertos}>
-          <Ionicons name="star" size={18} color={colores.primario} />
-          <Text style={styles.aciertosTexto}>{aciertos}</Text>
-        </View>
-      </View>
+      <BarraAvance paso={hechas + 1} total={total} aciertos={aciertos} />
       <View style={styles.situacion}>
-        <Portada imagen={nodo.tema} icono="warning" alto={170} style={styles.imagen} />
+        <Portada imagen={nodo.imagen ?? nodo.tema} icono="warning" alto={170} style={styles.imagen} />
         <Text style={styles.situacionTexto}>{nodo.situacion}</Text>
         <Text style={styles.pregunta}>¿Qué debes hacer?</Text>
       </View>
@@ -103,7 +118,10 @@ export default function EscenarioScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   cargando: { flex: 1 },
   contenedor: { padding: espacio.m, paddingBottom: espacio.xl },
+  avance: { marginBottom: espacio.m },
   barra: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: espacio.s },
+  pista: { height: 8, borderRadius: 4, backgroundColor: colores.borde, overflow: 'hidden' },
+  relleno: { height: '100%', backgroundColor: colores.primario },
   etiqueta: { fontSize: fuente.pie, fontWeight: '700', color: colores.primario, textTransform: 'uppercase' },
   aciertos: { flexDirection: 'row', alignItems: 'center' },
   aciertosTexto: { fontSize: fuente.normal, fontWeight: '700', color: colores.primario, marginLeft: espacio.xs },
